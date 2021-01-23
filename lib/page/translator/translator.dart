@@ -13,29 +13,37 @@ class Translator extends StatefulWidget {
 
 class _TranslatorState extends State<Translator> {
   bool swapped;
+  Map<String, List<String>> translationData = {
+    'English': ["Ilonggo", "Akeanon", "Hiligaynon", "Kinaray-a"],
+    'Good Morning': [
+      "Ma-ayong Aga",
+      "Mayad nga Agahon",
+      "Ma-ayong Aga",
+      "Mayad nga Aga"
+    ],
+    'Good Afternoon': [
+      "Ma-ayong Hapon",
+      "Mayad nga Hapon",
+      "Ma-ayong Hapon",
+      "Mayad nga Hapon"
+    ],
+    'Good Evening': [
+      "Ma-ayong Gab-i",
+      "Mayad nga Gabi-i",
+      "Ma-ayong Gab-i",
+      "Mayad nga Gab-i"
+    ],
+  };
 
 // Drop Down Menu for Language
   Language _selectedLanguage;
   List<DropdownMenuItem<Language>> _dropdownMenuItems;
   List<Language> _languageList = [
-    Language(1, "Ilonggo"),
-    Language(2, "Akeanon"),
-    Language(3, "Hiligaynon"),
-    Language(4, "Kinaray-a")
+    Language(1, "Ilonggo", "assets/images/logo/iloilo.png"),
+    Language(2, "Akeanon", "assets/images/logo/aklan.png"),
+    Language(3, "Hiligaynon", "assets/images/logo/capiz.png"),
+    Language(4, "Kinaray-a", "assets/images/logo/antique.png")
   ];
-
-  List<DropdownMenuItem<Language>> buildDropDownMenuItems(List listItems) {
-    List<DropdownMenuItem<Language>> items = List();
-    for (Language listItem in listItems) {
-      items.add(
-        DropdownMenuItem(
-          child: Text(listItem.name),
-          value: listItem,
-        ),
-      );
-    }
-    return items;
-  }
 
   // Drop Down Menu for Language *END
 
@@ -56,27 +64,68 @@ class _TranslatorState extends State<Translator> {
     );
   }
 
+  // make a language list widget for dropdown list
+  List<DropdownMenuItem<Language>> buildDropDownMenuItems(List listItems) {
+    List<DropdownMenuItem<Language>> items = List();
+    for (Language listItem in listItems) {
+      items.add(
+        DropdownMenuItem(
+          child: Row(
+            children: [
+              Image.asset(
+                listItem.logo,
+                height: 60,
+                fit: BoxFit.fitHeight,
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 5),
+              ),
+              Container(
+                child: Text(
+                  listItem.name,
+                  overflow: TextOverflow.fade,
+                  softWrap: true,
+                ),
+              ),
+            ],
+          ),
+          value: listItem,
+        ),
+      );
+    }
+    return items;
+  }
+
   Widget localLanguagesBar() {
-    return Container(
-      child: DropdownButtonHideUnderline(
-        child: DropdownButton<Language>(
-            elevation: 9,
-            style: TextStyle(
-              color: Theme.of(context).primaryColor,
-              fontSize: 15,
-            ),
-            icon: Icon(
-              Icons.arrow_drop_down,
-              color: Theme.of(context).primaryColor,
-            ),
-            value: _selectedLanguage,
-            items: _dropdownMenuItems,
-            onChanged: (value) {
-              setState(() {
-                _selectedLanguage = value;
-              });
-            }),
-      ),
+    return DropdownButtonHideUnderline(
+      child: DropdownButton<Language>(
+          isExpanded: true,
+          selectedItemBuilder: (BuildContext context) {
+            return _languageList.map<Widget>((language) {
+              return Container(
+                alignment: Alignment.center,
+                child: Text(
+                  language.name,
+                ),
+              );
+            }).toList();
+          },
+          elevation: 9,
+          style: TextStyle(
+            color: Theme.of(context).primaryColor,
+            fontSize: 15,
+          ),
+          icon: Icon(
+            Icons.arrow_drop_down,
+            color: Theme.of(context).primaryColor,
+          ),
+          value: _selectedLanguage,
+          items: _dropdownMenuItems,
+          onChanged: (value) {
+            setState(() {
+              _selectedLanguage = value;
+            });
+          }),
     );
   }
 
@@ -119,7 +168,7 @@ class _TranslatorState extends State<Translator> {
         title: Text('Panay Translator'),
       ),
       drawer: MainDrawer(),
-      body: ListView(
+      body: Column(
         children: [
           Container(
             decoration: BoxDecoration(
@@ -135,7 +184,7 @@ class _TranslatorState extends State<Translator> {
               children: [
                 Expanded(
                   child: Container(
-                    alignment: Alignment.centerLeft,
+                    alignment: Alignment.center,
                     child: languageOrientation('left'),
                   ),
                 ),
@@ -154,7 +203,7 @@ class _TranslatorState extends State<Translator> {
                 ),
                 Expanded(
                   child: Container(
-                    alignment: Alignment.centerRight,
+                    alignment: Alignment.center,
                     child: languageOrientation('right'),
                   ),
                 ),
