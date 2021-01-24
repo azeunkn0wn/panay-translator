@@ -77,7 +77,7 @@ class _TranslatorState extends State<Translator> {
 
   _englishTextListener() {
     String output = '';
-    String input = englishText.text.toLowerCase();
+    String input = englishText.text.toLowerCase().trim();
 
     if (swapped) {
       if (translationData.containsKey(input)) {
@@ -96,7 +96,7 @@ class _TranslatorState extends State<Translator> {
 
   _localTextTextListener() {
     String output = '';
-    String input = localText.text.toLowerCase();
+    String input = localText.text.toLowerCase().trim();
     if (!swapped) {
       translationData.forEach((english, local) {
         if (local[_selectedLanguage.id] == input) {
