@@ -1,57 +1,117 @@
 import 'package:PanayTranslator/drawer.dart';
-import 'package:PanayTranslator/page/translator/englishcard.dart';
 import 'package:PanayTranslator/page/translator/languagelist.dart';
-import 'package:PanayTranslator/page/translator/localcard.dart';
+// import 'package:PanayTranslator/page/translator/englishcard.dart';
+// import 'package:PanayTranslator/page/translator/localcard.dart';
 import 'package:flutter/material.dart';
 
 class Translator extends StatefulWidget {
-  const Translator({Key key, String title}) : super(key: key);
-
+  Translator({Key key, String title}) : super(key: key);
   @override
   _TranslatorState createState() => _TranslatorState();
 }
 
 class _TranslatorState extends State<Translator> {
   bool swapped;
+
   Map<String, List<String>> translationData = {
-    'English': ["Ilonggo", "Akeanon", "Hiligaynon", "Kinaray-a"],
-    'Good Morning': [
-      "Ma-ayong Aga",
-      "Mayad nga Agahon",
-      "Ma-ayong Aga",
-      "Mayad nga Aga"
+    'english': ["ilonggo", "akeanon", "hiligaynon", "kinaray-a"],
+    'good morning': [
+      "ma-ayong aga",
+      "mayad nga agahon",
+      "ma-ayong aga",
+      "mayad nga aga"
     ],
-    'Good Afternoon': [
-      "Ma-ayong Hapon",
-      "Mayad nga Hapon",
-      "Ma-ayong Hapon",
-      "Mayad nga Hapon"
+    'good afternoon': [
+      "ma-ayong hapon",
+      "mayad nga hapon",
+      "ma-ayong hapon",
+      "mayad nga hapon"
     ],
-    'Good Evening': [
-      "Ma-ayong Gab-i",
-      "Mayad nga Gabi-i",
-      "Ma-ayong Gab-i",
-      "Mayad nga Gab-i"
+    'good evening': [
+      "ma-ayong gab-i",
+      "mayad nga gabi-i",
+      "ma-ayong gab-i",
+      "mayad nga gab-i"
     ],
   };
-
 // Drop Down Menu for Language
-  Language _selectedLanguage;
   List<DropdownMenuItem<Language>> _dropdownMenuItems;
+
+  // font size config:
+  double languageBarSize = 16;
+  double languageCardSize = 24;
+
   List<Language> _languageList = [
-    Language(1, "Ilonggo", "assets/images/logo/iloilo.png"),
-    Language(2, "Akeanon", "assets/images/logo/aklan.png"),
-    Language(3, "Hiligaynon", "assets/images/logo/capiz.png"),
-    Language(4, "Kinaray-a", "assets/images/logo/antique.png")
+    Language(0, "Ilonggo", "assets/images/logo/iloilo.png"),
+    Language(1, "Akeanon", "assets/images/logo/aklan.png"),
+    Language(2, "Hiligaynon", "assets/images/logo/capiz.png"),
+    Language(3, "Kinaray-a", "assets/images/logo/antique.png")
   ];
 
-  // Drop Down Menu for Language *END
+  Language _selectedLanguage;
+
+  final englishText = TextEditingController();
+  final localText = TextEditingController();
 
   void initState() {
     super.initState();
     swapped = false;
     _dropdownMenuItems = buildDropDownMenuItems(_languageList);
     _selectedLanguage = _dropdownMenuItems[0].value;
+
+    englishText.addListener(_englishTextListener);
+    localText.addListener(_localTextTextListener);
+  }
+
+  @override
+  void dispose() {
+    localText.dispose();
+    englishText.dispose();
+    super.dispose();
+  }
+
+  clearTextFields() {
+    localText.clear();
+    englishText.clear();
+  }
+
+  _englishTextListener() {
+    String output = '';
+    String input = englishText.text.toLowerCase();
+
+    if (swapped) {
+      if (translationData.containsKey(input)) {
+        output = translationData[input][_selectedLanguage.id];
+      } else {
+        output = '';
+      }
+
+      if (output != null) {
+        setState(() {
+          localText.value = TextEditingValue(text: output);
+        });
+      }
+    }
+  }
+
+  _localTextTextListener() {
+    String output = '';
+    String input = localText.text.toLowerCase();
+    if (!swapped) {
+      translationData.forEach((english, local) {
+        if (local[_selectedLanguage.id] == input) {
+          output = english.toString();
+        } else {
+          output = '';
+        }
+      });
+
+      if (output != null) {
+        setState(() {
+          englishText.value = TextEditingValue(text: output);
+        });
+      }
+    }
   }
 
   Widget englishBar() {
@@ -59,7 +119,7 @@ class _TranslatorState extends State<Translator> {
       'English',
       style: TextStyle(
         color: Theme.of(context).primaryColor,
-        fontSize: 15,
+        fontSize: languageBarSize,
       ),
     );
   }
@@ -113,7 +173,7 @@ class _TranslatorState extends State<Translator> {
           elevation: 9,
           style: TextStyle(
             color: Theme.of(context).primaryColor,
-            fontSize: 15,
+            fontSize: languageBarSize,
           ),
           icon: Icon(
             Icons.arrow_drop_down,
@@ -123,6 +183,7 @@ class _TranslatorState extends State<Translator> {
           items: _dropdownMenuItems,
           onChanged: (value) {
             setState(() {
+              print(englishText.text);
               _selectedLanguage = value;
             });
           }),
@@ -135,14 +196,14 @@ class _TranslatorState extends State<Translator> {
     if (swapped) {
       orientation = [englishBar(), localLanguagesBar()];
       cards = [
-        EnglishCard(active: true),
-        LocalCard(language: _selectedLanguage)
+        englishCard(active: true),
+        localCard(language: _selectedLanguage)
       ];
     } else {
       orientation = [localLanguagesBar(), englishBar()];
       cards = [
-        LocalCard(language: _selectedLanguage, active: true),
-        EnglishCard()
+        localCard(language: _selectedLanguage, active: true),
+        englishCard()
       ];
     }
 
@@ -196,6 +257,7 @@ class _TranslatorState extends State<Translator> {
                   onPressed: () {
                     setState(() {
                       swapped = !swapped;
+                      clearTextFields();
                     });
                   },
                   child: Icon(Icons.swap_horiz,
@@ -212,6 +274,88 @@ class _TranslatorState extends State<Translator> {
           ),
           languageOrientation('card1'),
           languageOrientation('card2'),
+        ],
+      ),
+    );
+  }
+
+  Widget englishCard({bool active = false}) {
+    return Container(
+      decoration: BoxDecoration(
+        shape: BoxShape.rectangle,
+        borderRadius: BorderRadius.all(Radius.circular(8.0)),
+        color: !active
+            ? Theme.of(context).primaryColor
+            : Theme.of(context).accentColor,
+      ),
+      alignment: Alignment.center,
+      padding: EdgeInsets.all(10),
+      margin: EdgeInsets.all(5),
+      child: Column(
+        children: [
+          // Text('English'),
+          TextField(
+            style: TextStyle(
+              fontSize: languageCardSize,
+              color: !active
+                  ? Theme.of(context).accentColor
+                  : Theme.of(context).primaryColor,
+            ),
+            controller: englishText,
+            enabled: active,
+            maxLines: 6,
+            minLines: !active
+                ? 3
+                : 1, // in-line if-else statement. if not active minLines = 3, else minLines = 1
+            decoration: InputDecoration(
+              border: InputBorder.none,
+              hintText: 'English',
+              hintStyle: TextStyle(
+                fontSize: 16,
+                color: !active ? Theme.of(context).accentColor : Colors.grey,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget localCard({bool active = false, Language language}) {
+    return Container(
+      decoration: BoxDecoration(
+        shape: BoxShape.rectangle,
+        borderRadius: BorderRadius.all(Radius.circular(8.0)),
+        color: !active
+            ? Theme.of(context).primaryColor
+            : Theme.of(context).accentColor,
+      ),
+      alignment: Alignment.center,
+      padding: EdgeInsets.all(10),
+      margin: EdgeInsets.all(5),
+      child: Column(
+        children: [
+          // Text(language.name),
+          TextField(
+            style: TextStyle(
+              fontSize: languageCardSize,
+              color: !active
+                  ? Theme.of(context).accentColor
+                  : Theme.of(context).primaryColor,
+            ),
+            enabled: active,
+            controller: localText,
+            maxLines: 6,
+            minLines: !active ? 3 : 1,
+            decoration: InputDecoration(
+              border: InputBorder.none,
+              hintText: language.name,
+              hintStyle: TextStyle(
+                fontSize: 16,
+                color: !active ? Theme.of(context).accentColor : Colors.grey,
+              ),
+            ),
+          ),
         ],
       ),
     );

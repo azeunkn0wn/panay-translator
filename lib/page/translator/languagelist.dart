@@ -1,7 +1,7 @@
 class Language {
-  int value;
+  int id;
   String name;
   String logo;
 
-  Language(this.value, this.name, this.logo);
+  Language(this.id, this.name, this.logo);
 }

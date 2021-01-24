@@ -11,12 +11,33 @@ class MainDrawer extends StatelessWidget {
           children: [
             DrawerHeader(
               margin: EdgeInsets.zero,
-              child: Center(child: Text('Logo Here')),
+              child: Container(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Panay',
+                      style: TextStyle(
+                        color: Theme.of(context).accentColor,
+                        fontSize: 30,
+                      ),
+                    ),
+                    Text(
+                      'Translator',
+                      style: TextStyle(
+                        color: Theme.of(context).accentColor,
+                        fontSize: 30,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   colors: [
-                    Theme.of(context).primaryColorLight,
-                    Theme.of(context).primaryColorDark,
+                    Theme.of(context).primaryColor,
+                    Theme.of(context).primaryColor,
                   ],
                 ),
               ),
