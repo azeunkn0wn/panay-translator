@@ -1,8 +1,9 @@
+import 'dart:async';
+
 import 'package:PanayTranslator/drawer.dart';
-import 'package:PanayTranslator/page/translator/languagelist.dart';
-// import 'package:PanayTranslator/page/translator/englishcard.dart';
-// import 'package:PanayTranslator/page/translator/localcard.dart';
+import 'package:PanayTranslator/model/language.dart';
 import 'package:flutter/material.dart';
+import 'package:PanayTranslator/utilities/database.dart';
 
 class Translator extends StatefulWidget {
   Translator({Key key, String title}) : super(key: key);
@@ -12,28 +13,8 @@ class Translator extends StatefulWidget {
 
 class _TranslatorState extends State<Translator> {
   bool swapped;
+  SQLiteDatabaseProvider db = SQLiteDatabaseProvider();
 
-  Map<String, List<String>> translationData = {
-    'english': ["ilonggo", "akeanon", "hiligaynon", "kinaray-a"],
-    'good morning': [
-      "ma-ayong aga",
-      "mayad nga agahon",
-      "ma-ayong aga",
-      "mayad nga aga"
-    ],
-    'good afternoon': [
-      "ma-ayong hapon",
-      "mayad nga hapon",
-      "ma-ayong hapon",
-      "mayad nga hapon"
-    ],
-    'good evening': [
-      "ma-ayong gab-i",
-      "mayad nga gabi-i",
-      "ma-ayong gab-i",
-      "mayad nga gab-i"
-    ],
-  };
 // Drop Down Menu for Language
   List<DropdownMenuItem<Language>> _dropdownMenuItems;
 
@@ -41,26 +22,29 @@ class _TranslatorState extends State<Translator> {
   double languageBarSize = 16;
   double languageCardSize = 24;
 
-  List<Language> _languageList = [
-    Language(0, "Ilonggo", "assets/images/logo/iloilo.png"),
-    Language(1, "Akeanon", "assets/images/logo/aklan.png"),
-    Language(2, "Hiligaynon", "assets/images/logo/capiz.png"),
-    Language(3, "Kinaray-a", "assets/images/logo/antique.png")
-  ];
-
   Language _selectedLanguage;
 
   final englishText = TextEditingController();
   final localText = TextEditingController();
+  Map languages;
+  Future<Map> getLanguages;
 
   void initState() {
     super.initState();
     swapped = false;
-    _dropdownMenuItems = buildDropDownMenuItems(_languageList);
-    _selectedLanguage = _dropdownMenuItems[0].value;
+    getLanguages = getData();
 
     englishText.addListener(_englishTextListener);
     localText.addListener(_localTextTextListener);
+  }
+
+  Future<Map> getData() async {
+    Map data = await db.getRegionLanguage();
+    // Map regions = data['regions'];
+    languages = data['languages'];
+    print('Finished getting data');
+    print(data);
+    return languages;
   }
 
   @override
@@ -75,13 +59,15 @@ class _TranslatorState extends State<Translator> {
     englishText.clear();
   }
 
-  _englishTextListener() {
+  _englishTextListener() async {
     String output = '';
+    List result = [];
     String input = englishText.text.toLowerCase().trim();
 
     if (swapped) {
-      if (translationData.containsKey(input)) {
-        output = translationData[input][_selectedLanguage.id];
+      result = await db.toLocal(input);
+      if (result.isNotEmpty) {
+        output = result[_selectedLanguage.languageID - 1].phrase;
       } else {
         output = '';
       }
@@ -94,23 +80,24 @@ class _TranslatorState extends State<Translator> {
     }
   }
 
-  _localTextTextListener() {
+  _localTextTextListener() async {
     String output = '';
+    List result = [];
     String input = localText.text.toLowerCase().trim();
     if (!swapped) {
-      translationData.forEach((english, local) {
-        if (local[_selectedLanguage.id] == input) {
-          output = english.toString();
-        } else {
-          output = '';
-        }
-      });
-
-      if (output != null) {
-        setState(() {
-          englishText.value = TextEditingValue(text: output);
-        });
+      result = await db.toEnglish(input, _selectedLanguage.languageID);
+      print(result);
+      if (result.isNotEmpty) {
+        output = result[0].phrase;
+      } else {
+        output = '';
       }
+    }
+
+    if (output != null) {
+      setState(() {
+        englishText.value = TextEditingValue(text: output);
+      });
     }
   }
 
@@ -124,48 +111,59 @@ class _TranslatorState extends State<Translator> {
     );
   }
 
-  // make a language list widget for dropdown list
-  List<DropdownMenuItem<Language>> buildDropDownMenuItems(List listItems) {
-    List<DropdownMenuItem<Language>> items = List();
-    for (Language listItem in listItems) {
-      items.add(
-        DropdownMenuItem(
-          child: Row(
-            children: [
-              Image.asset(
-                listItem.logo,
-                height: 60,
-                fit: BoxFit.fitHeight,
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 5),
-              ),
-              Container(
-                child: Text(
-                  listItem.name,
-                  overflow: TextOverflow.fade,
-                  softWrap: true,
-                ),
-              ),
-            ],
-          ),
-          value: listItem,
-        ),
+  Widget regionLogo(String logo) {
+    // avoid errors when logo is empty or null
+    if (logo != null && logo.isNotEmpty) {
+      return Image.asset(
+        logo,
+        height: 60,
+        fit: BoxFit.fitHeight,
       );
+    } else {
+      return Container();
     }
+  }
+
+  List<DropdownMenuItem<Language>> buildDropDownMenuItems(Map listItems) {
+    List<DropdownMenuItem<Language>> items = [];
+    listItems.forEach((key, value) {
+      if (value.language != 'English') {
+        items.add(
+          DropdownMenuItem(
+            child: Row(
+              children: [
+                regionLogo(value.logo), // logo image widget
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 5),
+                ),
+                Container(
+                  child: Text(
+                    value.language,
+                    overflow: TextOverflow.fade,
+                    softWrap: true,
+                  ),
+                ),
+              ],
+            ),
+            value: value,
+          ),
+        );
+      }
+    });
     return items;
   }
 
   Widget localLanguagesBar() {
+    languages.remove(0);
     return DropdownButtonHideUnderline(
       child: DropdownButton<Language>(
           isExpanded: true,
           selectedItemBuilder: (BuildContext context) {
-            return _languageList.map<Widget>((language) {
+            return languages.values.map<Widget>((language) {
               return Container(
                 alignment: Alignment.center,
                 child: Text(
-                  language.name,
+                  language.language,
                 ),
               );
             }).toList();
@@ -183,7 +181,6 @@ class _TranslatorState extends State<Translator> {
           items: _dropdownMenuItems,
           onChanged: (value) {
             setState(() {
-              print(englishText.text);
               _selectedLanguage = value;
             });
           }),
@@ -229,53 +226,81 @@ class _TranslatorState extends State<Translator> {
         title: Text('Panay Translator'),
       ),
       drawer: MainDrawer(),
-      body: Column(
-        children: [
-          Container(
-            decoration: BoxDecoration(
-              border: Border(
-                bottom: BorderSide(
-                  color: Colors.grey,
-                ),
-              ),
-            ),
-            padding: EdgeInsets.symmetric(horizontal: 15),
-            height: 45,
-            child: Row(
-              children: [
-                Expanded(
-                  child: Container(
-                    alignment: Alignment.center,
-                    child: languageOrientation('left'),
+      body: FutureBuilder(
+          future: getLanguages,
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              _dropdownMenuItems = buildDropDownMenuItems(snapshot.data);
+              if (_selectedLanguage == null) {
+                _selectedLanguage = _dropdownMenuItems[0].value;
+                print(_selectedLanguage.language);
+              }
+
+              return Column(
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      border: Border(
+                        bottom: BorderSide(
+                          color: Colors.grey,
+                        ),
+                      ),
+                    ),
+                    padding: EdgeInsets.symmetric(horizontal: 15),
+                    height: 45,
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Container(
+                            alignment: Alignment.center,
+                            child: languageOrientation('left'),
+                          ),
+                        ),
+                        RaisedButton(
+                          elevation: 0,
+                          color: Theme.of(context)
+                              .canvasColor, //transparent background color
+                          shape: CircleBorder(),
+                          onPressed: () {
+                            setState(() {
+                              swapped = !swapped;
+                              clearTextFields();
+                            });
+                          },
+                          child: Icon(Icons.swap_horiz,
+                              size: 45, color: Theme.of(context).primaryColor),
+                        ),
+                        Expanded(
+                          child: Container(
+                            alignment: Alignment.center,
+                            child: languageOrientation('right'),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                RaisedButton(
-                  elevation: 0,
-                  color: Theme.of(context)
-                      .canvasColor, //transparent background color
-                  shape: CircleBorder(),
-                  onPressed: () {
-                    setState(() {
-                      swapped = !swapped;
-                      clearTextFields();
-                    });
-                  },
-                  child: Icon(Icons.swap_horiz,
-                      size: 45, color: Theme.of(context).primaryColor),
-                ),
-                Expanded(
-                  child: Container(
-                    alignment: Alignment.center,
-                    child: languageOrientation('right'),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          languageOrientation('card1'),
-          languageOrientation('card2'),
-        ],
-      ),
+                  languageOrientation('card1'),
+                  languageOrientation('card2'),
+                  RaisedButton(
+                    onPressed: () {
+                      // db.populateDatabase();
+                      // db.getAll().then((value) => print(value));
+
+                      // db.getLanguage('good morning');
+                      // print(_languageList[1].languageID);
+                      getData();
+                    },
+                  )
+                ],
+              );
+            } else {
+              return SizedBox(
+                child: CircularProgressIndicator(),
+                width: 60,
+                height: 60,
+              );
+            }
+          }),
     );
   }
 
@@ -302,6 +327,7 @@ class _TranslatorState extends State<Translator> {
                   : Theme.of(context).primaryColor,
             ),
             controller: englishText,
+            // onChanged: _onChangeHandler,
             enabled: active,
             maxLines: 6,
             minLines: !active
@@ -345,11 +371,12 @@ class _TranslatorState extends State<Translator> {
             ),
             enabled: active,
             controller: localText,
+            // onChanged: _onChangeHandler,
             maxLines: 6,
             minLines: !active ? 3 : 1,
             decoration: InputDecoration(
               border: InputBorder.none,
-              hintText: language.name,
+              hintText: language.language,
               hintStyle: TextStyle(
                 fontSize: 16,
                 color: !active ? Theme.of(context).accentColor : Colors.grey,
