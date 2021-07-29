@@ -2,8 +2,10 @@ import 'dart:async';
 
 import 'package:PanayTranslator/drawer.dart';
 import 'package:PanayTranslator/model/language.dart';
+import 'package:PanayTranslator/model/phrase.dart';
 import 'package:flutter/material.dart';
 import 'package:PanayTranslator/utilities/database.dart';
+// import 'package:flutter_tts/flutter_tts.dart';
 
 class Translator extends StatefulWidget {
   Translator({Key key, String title}) : super(key: key);
@@ -13,6 +15,7 @@ class Translator extends StatefulWidget {
 
 class _TranslatorState extends State<Translator> {
   bool swapped;
+
   SQLiteDatabaseProvider db = SQLiteDatabaseProvider();
 
 // Drop Down Menu for Language
@@ -39,11 +42,12 @@ class _TranslatorState extends State<Translator> {
   }
 
   Future<Map> getData() async {
+    await db.populateDatabase();
     Map data = await db.getRegionLanguage();
     // Map regions = data['regions'];
     languages = data['languages'];
     print('Finished getting data');
-    print(data);
+
     return languages;
   }
 
@@ -61,13 +65,17 @@ class _TranslatorState extends State<Translator> {
 
   _englishTextListener() async {
     String output = '';
-    List result = [];
+    List<Phrase> result = [];
     String input = englishText.text.toLowerCase().trim();
 
     if (swapped) {
       result = await db.toLocal(input);
+
       if (result.isNotEmpty) {
-        output = result[_selectedLanguage.languageID - 1].phrase;
+        output = result
+            .where((phrase) => phrase.language == _selectedLanguage)
+            .elementAt(0)
+            .phrase;
       } else {
         output = '';
       }
@@ -84,20 +92,21 @@ class _TranslatorState extends State<Translator> {
     String output = '';
     List result = [];
     String input = localText.text.toLowerCase().trim();
+
     if (!swapped) {
       result = await db.toEnglish(input, _selectedLanguage.languageID);
-      print(result);
+
       if (result.isNotEmpty) {
         output = result[0].phrase;
       } else {
         output = '';
       }
-    }
 
-    if (output != null) {
-      setState(() {
-        englishText.value = TextEditingValue(text: output);
-      });
+      if (output != null) {
+        setState(() {
+          englishText.value = TextEditingValue(text: output);
+        });
+      }
     }
   }
 
@@ -219,6 +228,12 @@ class _TranslatorState extends State<Translator> {
     return Text('error');
   }
 
+  // TTS
+  // final FlutterTts flutterTts = FlutterTts();
+  // Future _speak(String phrase) async {
+  //   await flutterTts.speak(phrase);
+  // }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -233,7 +248,6 @@ class _TranslatorState extends State<Translator> {
               _dropdownMenuItems = buildDropDownMenuItems(snapshot.data);
               if (_selectedLanguage == null) {
                 _selectedLanguage = _dropdownMenuItems[0].value;
-                print(_selectedLanguage.language);
               }
 
               return Column(
@@ -281,14 +295,15 @@ class _TranslatorState extends State<Translator> {
                   ),
                   languageOrientation('card1'),
                   languageOrientation('card2'),
-                  RaisedButton(
+                  ElevatedButton(
+                    child: (Text("Button")),
                     onPressed: () {
                       // db.populateDatabase();
                       // db.getAll().then((value) => print(value));
 
                       // db.getLanguage('good morning');
                       // print(_languageList[1].languageID);
-                      getData();
+                      // getData();
                     },
                   )
                 ],
@@ -342,6 +357,12 @@ class _TranslatorState extends State<Translator> {
               ),
             ),
           ),
+          ElevatedButton(
+            onPressed: () {}, child: null,
+            // onPressed: () => _speak(englishText.text), child: Text('TTS')
+          ),
+
+          ///working on TTS button
         ],
       ),
     );

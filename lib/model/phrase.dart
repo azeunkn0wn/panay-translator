@@ -25,6 +25,6 @@ class Phrase {
 
   @override
   String toString() {
-    return "$phrase, ($language)";
+    return "$language: $phrase";
   }
 }

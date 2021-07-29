@@ -64,7 +64,7 @@ class SQLiteDatabaseProvider {
           logo TEXT          
           )
         """);
-    populateDatabase();
+    // populateDatabase()
   }
 
   Future<void> populateDatabase() async {
@@ -245,6 +245,7 @@ class SQLiteDatabaseProvider {
         languages[map['language_id']] = Language.fromMap(i);
       }
     }
+    print(languages);
 
     return {'regions': regions, 'languages': languages};
   }
@@ -264,6 +265,7 @@ class SQLiteDatabaseProvider {
     for (Map phrase in phrases) {
       result.add(Phrase.fromMap(phrase));
     }
+
     return result;
   }
 

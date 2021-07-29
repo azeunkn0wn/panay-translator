@@ -1,4 +1,4 @@
-import 'package:PanayTranslator/page/translator/translator.dart';
+import 'package:PanayTranslator/routegenerator.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -18,7 +18,10 @@ class MyApp extends StatelessWidget {
           canvasColor: Colors.grey[200],
           visualDensity: VisualDensity.adaptivePlatformDensity,
           textTheme: TextTheme()),
-      home: Translator(title: 'Panay Translator'),
+
+      initialRoute: '/translator', // DO NOT CHANGE
+
+      onGenerateRoute: RouteGenerator.generateRoute,
     );
   }
 }

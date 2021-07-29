@@ -9,43 +9,29 @@ class MainDrawer extends StatelessWidget {
       child: SafeArea(
         child: ListView(
           children: [
-            DrawerHeader(
-              margin: EdgeInsets.zero,
-              child: Container(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Panay',
-                      style: TextStyle(
-                        color: Theme.of(context).accentColor,
-                        fontSize: 30,
-                      ),
-                    ),
-                    Text(
-                      'Translator',
-                      style: TextStyle(
-                        color: Theme.of(context).accentColor,
-                        fontSize: 30,
-                      ),
-                    ),
-                  ],
+            Container(
+              height: MediaQuery.of(context).size.width - 100,
+              margin: EdgeInsets.all(0.0),
+              padding: EdgeInsets.all(0.0),
+              child: DrawerHeader(
+                decoration: BoxDecoration(
+                  color: Theme.of(context).primaryColor,
                 ),
-              ),
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [
-                    Theme.of(context).primaryColor,
-                    Theme.of(context).primaryColor,
-                  ],
+                margin: EdgeInsets.zero,
+                child: Image.asset(
+                  'assets/images/Panay Island Translator (round).png',
+                  fit: BoxFit.contain,
                 ),
               ),
             ),
-            CustomDrawerListTile(Icons.translate, 'Translator', () => {}),
-            CustomDrawerListTile(Icons.school, 'Wiki', () => {}),
-            CustomDrawerListTile(Icons.star_border, 'About', () => {}),
-            CustomDrawerListTile(Icons.exit_to_app, 'Exit', () => {}),
+            CustomDrawerListTile(Icons.translate, 'Translator',
+                () => {Navigator.pushNamed(context, "/translator")}),
+            CustomDrawerListTile(Icons.school, 'Wiki',
+                () => {Navigator.pushNamed(context, "/wiki")}),
+            CustomDrawerListTile(Icons.star_border, 'About',
+                () => {print(ModalRoute.of(context).settings)}),
+            CustomDrawerListTile(Icons.exit_to_app, 'Exit',
+                () => {print(ModalRoute.of(context).settings.name)}),
           ],
         ),
       ),
