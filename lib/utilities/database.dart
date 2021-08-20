@@ -11,12 +11,17 @@ import 'package:path/path.dart';
 class SQLiteDatabaseProvider {
   static final SQLiteDatabaseProvider db = SQLiteDatabaseProvider();
   Database? _database;
+  bool fresh = false;
 
   Future<Database?> get database async {
     if (_database != null) {
       return _database;
     }
     _database = await initDB();
+    if (fresh) {
+      await populateDatabase();
+      fresh = false;
+    }
     return _database;
   }
 
@@ -33,6 +38,7 @@ class SQLiteDatabaseProvider {
   }
 
   void _onCreate(Database db, int version) async {
+    fresh = true;
     await db.execute("""
           CREATE TABLE Phrase(
           phrase_id INTEGER PRIMARY KEY,           
@@ -64,13 +70,12 @@ class SQLiteDatabaseProvider {
           logo TEXT          
           )
         """);
-    // populateDatabase()
   }
 
   Future<void> populateDatabase() async {
     final Database? db = await database;
     // truncate tables
-    // truncate tables
+
     print(await db!.delete('Language'));
     print('deleted Language');
     print(await db.delete('Region'));
@@ -227,7 +232,7 @@ class SQLiteDatabaseProvider {
 
     Map<int?, Region> regions = {};
     for (Map i in regionsQuery) {
-      if (i != null && i.containsKey('region_id')) {
+      if (i.containsKey('region_id')) {
         regions[i['region_id']] = Region.fromMap(i);
       }
     }
@@ -238,14 +243,13 @@ class SQLiteDatabaseProvider {
 
     for (Map i in languagesQuery) {
       Map map = Map.of(i);
-      if (map != null && map.containsKey('language_id')) {
+      if (map.containsKey('language_id')) {
         if (map['region_id'] != null) {
           map['region'] = regions[map['region_id']];
         }
         languages[map['language_id']] = Language.fromMap(i);
       }
     }
-    print(languages);
 
     return {'regions': regions, 'languages': languages};
   }

@@ -24,8 +24,8 @@ class Region {
     };
   }
 
-  @override
-  String toString() {
-    return "$regionName";
-  }
+  // @override
+  // String toString() {
+  //   return "$regionName";
+  // }
 }

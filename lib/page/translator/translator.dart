@@ -42,11 +42,10 @@ class _TranslatorState extends State<Translator> {
   }
 
   Future<Map?> getData() async {
-    await db.populateDatabase();
+    // await db.populateDatabase();
     Map data = await db.getRegionLanguage();
-    // Map regions = data['regions'];
     languages = data['languages'];
-    print('Finished getting data');
+    print('finished getting languages from database');
 
     return languages;
   }
@@ -288,8 +287,11 @@ class _TranslatorState extends State<Translator> {
                               clearTextFields();
                             });
                           },
-                          child: Icon(Icons.swap_horiz,
-                              size: 45, color: Theme.of(context).primaryColor),
+                          child: Icon(
+                            Icons.swap_horiz,
+                            size: 45,
+                            color: Theme.of(context).primaryColor,
+                          ),
                         ),
                         Expanded(
                           child: Container(
