@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class MainDrawer extends StatelessWidget {
-  const MainDrawer({Key key}) : super(key: key);
+  const MainDrawer({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -29,9 +29,9 @@ class MainDrawer extends StatelessWidget {
             CustomDrawerListTile(Icons.school, 'Wiki',
                 () => {Navigator.pushNamed(context, "/wiki")}),
             CustomDrawerListTile(Icons.star_border, 'About',
-                () => {print(ModalRoute.of(context).settings)}),
+                () => {print(ModalRoute.of(context)!.settings)}),
             CustomDrawerListTile(Icons.exit_to_app, 'Exit',
-                () => {print(ModalRoute.of(context).settings.name)}),
+                () => {print(ModalRoute.of(context)!.settings.name)}),
           ],
         ),
       ),
@@ -57,7 +57,7 @@ class CustomDrawerListTile extends StatelessWidget {
       ),
       child: InkWell(
         splashColor: Theme.of(context).primaryColor,
-        onTap: onTap,
+        onTap: onTap as void Function()?,
         child: Container(
           margin: EdgeInsets.fromLTRB(20, 0, 8, 0),
           height: 50,

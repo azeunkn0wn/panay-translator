@@ -1,8 +1,8 @@
 import 'package:PanayTranslator/model/language.dart';
 
 class Phrase {
-  int phraseID;
-  String phrase;
+  int? phraseID;
+  String? phrase;
   Language language;
 
   Phrase(this.phraseID, this.phrase, this.language);
@@ -10,8 +10,8 @@ class Phrase {
   factory Phrase.fromMap(map) {
     Language lang = Language.fromMap(map);
     return Phrase(
-      map['phrase_id'] as int,
-      map['phrase'] as String,
+      map['phrase_id'] as int?,
+      map['phrase'] as String?,
       lang,
     );
   }

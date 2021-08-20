@@ -10,9 +10,9 @@ import 'package:path/path.dart';
 
 class SQLiteDatabaseProvider {
   static final SQLiteDatabaseProvider db = SQLiteDatabaseProvider();
-  Database _database;
+  Database? _database;
 
-  Future<Database> get database async {
+  Future<Database?> get database async {
     if (_database != null) {
       return _database;
     }
@@ -68,10 +68,10 @@ class SQLiteDatabaseProvider {
   }
 
   Future<void> populateDatabase() async {
-    final Database db = await database;
+    final Database? db = await database;
     // truncate tables
     // truncate tables
-    print(await db.delete('Language'));
+    print(await db!.delete('Language'));
     print('deleted Language');
     print(await db.delete('Region'));
     print('deleted region');
@@ -221,18 +221,18 @@ class SQLiteDatabaseProvider {
   }
 
   Future<Map> getRegionLanguage() async {
-    final Database db = await database;
+    final Database? db = await database;
 
-    final List<Map<String, dynamic>> regionsQuery = await db.query('Region');
+    final List<Map<String, dynamic>> regionsQuery = await db!.query('Region');
 
-    Map<int, Region> regions = {};
+    Map<int?, Region> regions = {};
     for (Map i in regionsQuery) {
       if (i != null && i.containsKey('region_id')) {
         regions[i['region_id']] = Region.fromMap(i);
       }
     }
 
-    Map<int, Language> languages = {};
+    Map<int?, Language> languages = {};
     final List<Map<String, dynamic>> languagesQuery =
         await db.query('Language');
 
@@ -251,9 +251,9 @@ class SQLiteDatabaseProvider {
   }
 
   Future<List<Phrase>> toLocal(String phrase) async {
-    final Database db = await database;
+    final Database? db = await database;
     List<Phrase> result = [];
-    final List<Map<String, dynamic>> phrases = await db.rawQuery('''
+    final List<Map<String, dynamic>> phrases = await db!.rawQuery('''
     SELECT tp.translation_id, loc.phrase_id, loc.phrase, loc.language_id, lang.language
     FROM TranslationPivot tp
     JOIN Phrase eng ON phrase_id_english = eng.phrase_id
@@ -269,10 +269,10 @@ class SQLiteDatabaseProvider {
     return result;
   }
 
-  Future<List<Phrase>> toEnglish(String phrase, int languageID) async {
-    final Database db = await database;
+  Future<List<Phrase>> toEnglish(String phrase, int? languageID) async {
+    final Database? db = await database;
     List<Phrase> result = [];
-    final List<Map<String, dynamic>> phrases = await db.rawQuery('''
+    final List<Map<String, dynamic>> phrases = await db!.rawQuery('''
     SELECT tp.translation_id, eng.phrase_id, eng.phrase, eng.language_id, lang.language
   FROM TranslationPivot tp
     JOIN Phrase eng ON phrase_id_english = eng.phrase_id

@@ -7,18 +7,11 @@ class Wiki extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: Scaffold(
-        appBar: AppBar(
-          title: Text('Wiki'),
-        ),
-        drawer: MainDrawer(),
-        body: Container(
-            child: ElevatedButton(
-          autofocus: true,
-          clipBehavior: Clip.none,
-          onPressed: () {},
-          child: Text("TTS"),
-        )),
-      ),
+          appBar: AppBar(
+            title: Text('Wiki'),
+          ),
+          drawer: MainDrawer(),
+          body: Container()),
     );
   }
 }
