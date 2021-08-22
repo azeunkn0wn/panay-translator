@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class MainDrawer extends StatelessWidget {
   const MainDrawer({Key? key}) : super(key: key);
@@ -30,8 +31,8 @@ class MainDrawer extends StatelessWidget {
                 () => {Navigator.pushNamed(context, "/wiki")}),
             CustomDrawerListTile(Icons.star_border, 'About',
                 () => {print(ModalRoute.of(context)!.settings)}),
-            CustomDrawerListTile(Icons.exit_to_app, 'Exit',
-                () => {print(ModalRoute.of(context)!.settings.name)}),
+            CustomDrawerListTile(
+                Icons.exit_to_app, 'Exit', () => {SystemNavigator.pop()}),
           ],
         ),
       ),

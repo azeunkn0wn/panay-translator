@@ -25,7 +25,7 @@ class WikiButtons extends StatelessWidget {
       child: Container(
         child: InkWell(
           onTap: () {
-            timeDilation = 4;
+            timeDilation = 2;
             Navigator.of(context).pushNamed('/wikipage', arguments: region);
           },
           child: Row(
@@ -72,6 +72,7 @@ class PhotoHero extends StatelessWidget {
           color: Colors.transparent,
           child: Image.asset(
             photo!,
+            fit: BoxFit.fitHeight,
           ),
         ),
       ),

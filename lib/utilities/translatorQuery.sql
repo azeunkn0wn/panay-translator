@@ -1,3 +1,6 @@
+-- for testing only
+
+
 -- SQLite
 SELECT *
 FROM TranslationPivot tp

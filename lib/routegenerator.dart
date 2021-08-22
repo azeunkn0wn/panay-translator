@@ -1,5 +1,6 @@
 import 'package:PanayTranslator/model/region.dart';
 import 'package:PanayTranslator/page/translator/translator.dart';
+import 'package:PanayTranslator/page/wiki/wiki-antique.dart';
 import 'package:PanayTranslator/page/wiki/wiki.dart';
 import 'package:PanayTranslator/page/wiki/wikipage.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +16,9 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => Wiki());
       case '/wikipage':
         return MaterialPageRoute(builder: (_) => WikiPage(args as Region));
+      case '/test':
+        return MaterialPageRoute(builder: (_) => WikiAntique(args as Region));
+
       default:
         return _errorRoute();
     }
