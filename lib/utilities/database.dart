@@ -141,24 +141,63 @@ class SQLiteDatabaseProvider {
     // all in lower case
 
     Map<String, List<String>> translationData = {
-      'english': ["ilonggo", "akeanon", "hiligaynon", "kinaray-a"],
-      'good morning': [
+      "english": ["ilonggo", "akeanon", "hiligaynon", "kinaray-a"],
+      "good morning": [
         "ma-ayong aga",
         "mayad nga agahon",
         "ma-ayong aga",
         "mayad nga aga"
       ],
-      'good afternoon': [
+      "good afternoon": [
         "ma-ayong hapon",
         "mayad nga hapon",
         "ma-ayong hapon",
         "mayad nga hapon"
       ],
-      'good evening': [
+      "good evening": [
         "ma-ayong gab-i",
         "mayad nga gabi-i",
         "ma-ayong gab-i",
         "mayad nga gab-i"
+      ],
+      "do you speak english": [
+        "kabalo ka maghambal inglis",
+        "makahambae ka it english",
+        "kabalo ka maghambal inglis",
+        "kama-an kaw maghambal kang inglis"
+      ],
+      "how much": ["tagpila", "tig-pila ea", "tagpila", "tag pira"],
+      "i don't know": [
+        "waay ako kabalo",
+        "uwa ko kasayud",
+        "wala ako kabalo",
+        "wara takən kamaan"
+      ],
+      "what is your name": [
+        "ano ngalan mo",
+        "ano imong pangaean",
+        "ano ngalan nimo",
+        "ano ngaran mo"
+      ],
+      "thank you": ["salamat", "saeamat", "salamat", "salamat"],
+      "where are you going": [
+        "diin ka makadtu",
+        "siin ka gaadto",
+        "sa diin ka makadto",
+        "diin kaw makadto"
+      ],
+      "hurry": ["dasiga", "dalia", "dasiga", "dasig"],
+      "where did you come from": [
+        "di-in ka halin",
+        "siin ikaw nag halin",
+        "di-in ka halin",
+        "diin ikaw alin"
+      ],
+      "i don't understand": [
+        "wala ko kabalo",
+        "wa takon kasayod",
+        "wala ako kabalo",
+        "wa ako kamaan"
       ],
     };
 
@@ -171,7 +210,7 @@ class SQLiteDatabaseProvider {
           englishPhraseID = await txn.insert(
               'Phrase',
               {
-                'phrase': english,
+                'phrase': english.toLowerCase(),
                 'language_id': 0,
               },
               conflictAlgorithm: ConflictAlgorithm.replace);
@@ -179,7 +218,7 @@ class SQLiteDatabaseProvider {
           localPhraseID.add(await txn.insert(
               'Phrase',
               {
-                'phrase': local[0],
+                'phrase': local[0].toLowerCase(),
                 'language_id': 1,
               },
               conflictAlgorithm: ConflictAlgorithm.replace));
@@ -187,7 +226,7 @@ class SQLiteDatabaseProvider {
           localPhraseID.add(await txn.insert(
               'Phrase',
               {
-                'phrase': local[1],
+                'phrase': local[1].toLowerCase(),
                 'language_id': 2,
               },
               conflictAlgorithm: ConflictAlgorithm.replace));
@@ -195,7 +234,7 @@ class SQLiteDatabaseProvider {
           localPhraseID.add(await txn.insert(
               'Phrase',
               {
-                'phrase': local[2],
+                'phrase': local[2].toLowerCase(),
                 'language_id': 3,
               },
               conflictAlgorithm: ConflictAlgorithm.replace));
@@ -203,7 +242,7 @@ class SQLiteDatabaseProvider {
           localPhraseID.add(await txn.insert(
               'Phrase',
               {
-                'phrase': local[3],
+                'phrase': local[3].toLowerCase(),
                 'language_id': 4,
               },
               conflictAlgorithm: ConflictAlgorithm.replace));

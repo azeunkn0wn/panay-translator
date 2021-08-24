@@ -67,19 +67,26 @@ class _TranslatorState extends State<Translator> {
     List<Phrase> result = [];
     String input = englishText.text.toLowerCase().trim();
 
+    // ignoring punctuation
+    RegExp regExp = new RegExp(r"[^\w\s\-\']{1,}$", caseSensitive: false);
+    String punctuation = regExp.stringMatch(input).toString();
+
     if (swapped) {
-      result = await db.toLocal(input);
+      result = await db.toLocal(input.replaceAll(regExp, ''));
 
       if (result.isNotEmpty) {
-        output = result
+        output = (result
             .where((phrase) => phrase.language == _selectedLanguage)
             .elementAt(0)
-            .phrase;
+            .phrase)!;
+        if (punctuation.isNotEmpty && punctuation != "null") {
+          output = (output + punctuation);
+        }
       } else {
         output = '';
       }
 
-      if (output != null) {
+      if (output.isNotEmpty) {
         setState(() {
           localText.value = TextEditingValue(text: output!);
         });
