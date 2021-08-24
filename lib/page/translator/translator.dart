@@ -230,12 +230,16 @@ class _TranslatorState extends State<Translator> {
   // TTS
   final FlutterTts flutterTts = FlutterTts();
   Future _speak(String phrase, bool english) async {
+    String spokenPhrase = phrase;
     if (english) {
       await flutterTts.setLanguage("eng-US");
     } else {
       await flutterTts.setLanguage("fil-PH");
+      spokenPhrase = phrase.replaceAll("-i", "-ee");
     }
-    await flutterTts.speak(phrase);
+    await flutterTts.setSpeechRate(0.4);
+
+    await flutterTts.speak(spokenPhrase);
   }
 
   @override
