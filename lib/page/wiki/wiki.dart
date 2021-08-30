@@ -39,9 +39,8 @@ class _WikiState extends State<Wiki> {
   Widget build(BuildContext context) {
     return Container(
       child: Scaffold(
-        appBar: AppBar(
-          title: Text('Wiki'),
-        ),
+        appBar:
+            AppBar(title: Text('Wiki'), textTheme: Theme.of(context).textTheme),
         drawer: MainDrawer(),
         body: FutureBuilder(
             future: getRegion,

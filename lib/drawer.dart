@@ -25,14 +25,33 @@ class MainDrawer extends StatelessWidget {
                 ),
               ),
             ),
-            CustomDrawerListTile(Icons.translate, 'Translator',
+            CustomDrawerListTile(
+                Image.asset("assets/icon/translate.png"),
+                'Translator',
                 () => {Navigator.pushNamed(context, "/translator")}),
-            CustomDrawerListTile(Icons.school, 'Wiki',
+            CustomDrawerListTile(Image.asset("assets/icon/wiki.png"), 'Wiki',
                 () => {Navigator.pushNamed(context, "/wiki")}),
-            CustomDrawerListTile(Icons.star_border, 'About',
+            CustomDrawerListTile(
+                Icon(
+                  Icons.book,
+                  size: 50,
+                ),
+                'Dictionary',
+                () => {Navigator.pushNamed(context, "/wiki")}),
+            CustomDrawerListTile(
+                Icon(
+                  Icons.star_border,
+                  size: 50,
+                ),
+                'About',
                 () => {print(ModalRoute.of(context)!.settings)}),
             CustomDrawerListTile(
-                Icons.exit_to_app, 'Exit', () => {SystemNavigator.pop()}),
+                Icon(
+                  Icons.exit_to_app,
+                  size: 50,
+                ),
+                'Exit',
+                () => {SystemNavigator.pop()}),
           ],
         ),
       ),
@@ -41,7 +60,7 @@ class MainDrawer extends StatelessWidget {
 }
 
 class CustomDrawerListTile extends StatelessWidget {
-  final IconData icon;
+  final Widget icon;
   final String text;
   final Function onTap;
   CustomDrawerListTile(this.icon, this.text, this.onTap);
@@ -64,11 +83,12 @@ class CustomDrawerListTile extends StatelessWidget {
           height: 50,
           child: Row(
             children: [
-              Icon(icon),
-              Padding(padding: EdgeInsets.only(right: 10)),
+              icon,
+              Padding(padding: EdgeInsets.only(right: 20)),
               Text(
                 text,
-                textScaleFactor: 1.2,
+                textAlign: TextAlign.center,
+                textScaleFactor: 1.5,
               ),
             ],
           ),

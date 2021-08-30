@@ -177,17 +177,15 @@ class _TranslatorState extends State<Translator> {
             return languages!.values.map<Widget>((language) {
               return Container(
                 alignment: Alignment.center,
-                child: Text(
-                  language.language,
-                ),
+                child: Text(language.language),
               );
             }).toList();
           },
           elevation: 9,
-          style: TextStyle(
-            color: Theme.of(context).primaryColor,
-            fontSize: languageBarSize,
-          ),
+          style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                color: Theme.of(context).primaryColor,
+                fontSize: languageBarSize,
+              ),
           icon: Icon(
             Icons.arrow_drop_down,
             color: Theme.of(context).primaryColor,
@@ -253,8 +251,12 @@ class _TranslatorState extends State<Translator> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Panay Translator'),
-      ),
+          title: Text('Panay Translator'),
+          textTheme: Theme.of(context).textTheme
+          // GoogleFonts.pacificoTextTheme(
+          //   Theme.of(context).textTheme,
+          // ),
+          ),
       drawer: MainDrawer(),
       body: FutureBuilder(
           future: getLanguages,

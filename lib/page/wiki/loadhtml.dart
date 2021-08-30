@@ -6,7 +6,8 @@ import 'package:flutter_html/flutter_html.dart';
 
 class HtmlLoader extends StatefulWidget {
   final Region region;
-  HtmlLoader(this.region, {Key? key}) : super(key: key);
+  final String page;
+  HtmlLoader(this.region, {this.page = 'wiki'});
 
   @override
   _HtmlLoaderState createState() => _HtmlLoaderState();
@@ -16,14 +17,12 @@ class _HtmlLoaderState extends State<HtmlLoader> {
   Future<String>? htmlData;
 
   Future<String> loadAsset() async {
-    Map htmlselection = {
-      1: "assets/res/iloilo.html",
-      2: "assets/res/aklan.html",
-      3: "assets/res/capiz.html",
-      4: "assets/res/antique.html",
-    };
-
-    return await rootBundle.loadString(htmlselection[widget.region.regionID]);
+    if (widget.page == 'touristspots') {
+      return await rootBundle.loadString(
+          "assets/res/touristspots/${widget.region.regionName!.toLowerCase()}.html");
+    }
+    return await rootBundle.loadString(
+        "assets/res/wiki/${widget.region.regionName!.toLowerCase()}.html");
   }
 
   @override

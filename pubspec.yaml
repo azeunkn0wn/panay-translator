@@ -16,6 +16,7 @@ dependencies:
   flutter_html: ^2.1.1
   flutter_launcher_icons: ^0.9.1
   flutter_tts: ^3.2.1
+  google_fonts: ^2.1.0
   path_provider: ^2.0.2
   provider: ^5.0.0
   sqflite: ^2.0.0+3
@@ -29,7 +30,10 @@ flutter:
   assets:
     - assets/images/
     - assets/images/logo/
-    - assets/res/
+    - assets/res/wiki/
+    - assets/res/touristspots/
+
+    - assets/icon/
 
 flutter_icons:
   android: "launcher_icon"
