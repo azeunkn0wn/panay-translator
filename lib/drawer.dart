@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:PanayTranslator/utilities/photohero.dart';
 
 class MainDrawer extends StatelessWidget {
   const MainDrawer({Key? key}) : super(key: key);
@@ -19,9 +20,9 @@ class MainDrawer extends StatelessWidget {
                   color: Theme.of(context).primaryColor,
                 ),
                 margin: EdgeInsets.zero,
-                child: Image.asset(
-                  'assets/images/Panay Island Translator (round).png',
-                  fit: BoxFit.contain,
+                child: PhotoHero(
+                  photo: 'assets/images/Panay Island Translator (round).png',
+                  // fit: BoxFit.contain,
                 ),
               ),
             ),
@@ -33,18 +34,18 @@ class MainDrawer extends StatelessWidget {
                 () => {Navigator.pushNamed(context, "/wiki")}),
             CustomDrawerListTile(
                 Icon(
-                  Icons.book,
+                  Icons.travel_explore,
                   size: 50,
                 ),
-                'Dictionary',
-                () => {Navigator.pushNamed(context, "/wiki")}),
+                'Adventour',
+                () => {Navigator.pushNamed(context, "/adventour")}),
             CustomDrawerListTile(
                 Icon(
-                  Icons.star_border,
+                  Icons.error_outline,
                   size: 50,
                 ),
                 'About',
-                () => {print(ModalRoute.of(context)!.settings)}),
+                () => {Navigator.pushNamed(context, "/about")}),
             CustomDrawerListTile(
                 Icon(
                   Icons.exit_to_app,

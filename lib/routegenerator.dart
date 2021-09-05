@@ -1,4 +1,6 @@
 import 'package:PanayTranslator/model/region.dart';
+import 'package:PanayTranslator/page/about/aboutpage.dart';
+import 'package:PanayTranslator/page/adventour/adventour_page_view.dart';
 import 'package:PanayTranslator/page/translator/translator.dart';
 import 'package:PanayTranslator/page/wiki/wiki.dart';
 import 'package:PanayTranslator/page/wiki/wikipage.dart';
@@ -15,6 +17,10 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => Wiki());
       case '/wikipage':
         return MaterialPageRoute(builder: (_) => WikiPage(args as Region));
+      case '/adventour':
+        return MaterialPageRoute(builder: (_) => AdventourPageView());
+      case '/about':
+        return MaterialPageRoute(builder: (_) => AboutPage());
 
       default:
         return _errorRoute();

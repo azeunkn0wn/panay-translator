@@ -2,7 +2,7 @@
     package="com.example.panay_translator">
    <application
         android:label="panay_translator"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/launcher_icon">
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

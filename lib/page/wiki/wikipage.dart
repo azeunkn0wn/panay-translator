@@ -1,8 +1,8 @@
 import 'package:PanayTranslator/model/region.dart';
-import 'package:PanayTranslator/page/wiki/loadhtml.dart';
-import 'package:PanayTranslator/page/wiki/wikibuttons.dart';
+import 'package:PanayTranslator/utilities/loadhtml.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:PanayTranslator/utilities/photohero.dart';
 
 class WikiPage extends StatelessWidget {
   final Region region;
@@ -11,60 +11,6 @@ class WikiPage extends StatelessWidget {
   Widget build(BuildContext context) {
     timeDilation = 1;
 
-    Widget about = CustomScrollView(
-      physics: BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
-      slivers: <Widget>[
-        SliverAppBar(
-          // title: Text(region.regionName!.toUpperCase()),
-          centerTitle: true,
-          stretch: true,
-          pinned: true,
-          expandedHeight: 300.0,
-          flexibleSpace: FlexibleSpaceBar(
-            stretchModes: const <StretchMode>[
-              StretchMode.zoomBackground,
-              // StretchMode.blurBackground,
-            ],
-            background: PhotoHero(
-              photo: region.logo,
-              width: MediaQuery.of(context).size.width,
-            ),
-          ),
-        ),
-        SliverList(
-            delegate: SliverChildListDelegate.fixed([
-          HtmlLoader(region, page: 'wiki'),
-        ])),
-      ],
-    );
-
-    Widget touristSpots = CustomScrollView(
-      physics: BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
-      slivers: <Widget>[
-        SliverAppBar(
-          // title: Text(region.regionName!.toUpperCase()),
-          centerTitle: true,
-          stretch: true,
-          pinned: true,
-          expandedHeight: 300.0,
-          flexibleSpace: FlexibleSpaceBar(
-            stretchModes: const <StretchMode>[
-              StretchMode.zoomBackground,
-              // StretchMode.blurBackground,
-            ],
-            background: PhotoHero(
-              photo: region.logo,
-              width: MediaQuery.of(context).size.width,
-            ),
-          ),
-        ),
-        SliverList(
-            delegate: SliverChildListDelegate.fixed([
-          HtmlLoader(region, page: 'touristspots'),
-        ])),
-      ],
-    );
-
     return WillPopScope(
       onWillPop: () async {
         timeDilation = 1;
@@ -72,11 +18,32 @@ class WikiPage extends StatelessWidget {
       },
       child: Scaffold(
           body: SafeArea(
-        child: PageView(children: [
-          about,
-          touristSpots,
-        ]),
-      )),
+              child: CustomScrollView(
+        physics: BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+        slivers: <Widget>[
+          SliverAppBar(
+            // title: Text(region.regionName!.toUpperCase()),
+            centerTitle: true,
+            stretch: true,
+            pinned: true,
+            expandedHeight: 300.0,
+            flexibleSpace: FlexibleSpaceBar(
+              stretchModes: const <StretchMode>[
+                StretchMode.zoomBackground,
+                // StretchMode.blurBackground,
+              ],
+              background: PhotoHero(
+                photo: region.logo,
+                width: MediaQuery.of(context).size.width,
+              ),
+            ),
+          ),
+          SliverList(
+              delegate: SliverChildListDelegate.fixed([
+            HtmlLoader(region, page: 'wiki'),
+          ])),
+        ],
+      ))),
     );
   }
 }

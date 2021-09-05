@@ -1,4 +1,5 @@
 import 'package:PanayTranslator/model/region.dart';
+import 'package:PanayTranslator/utilities/photohero.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 
@@ -50,29 +51,6 @@ class WikiButtons extends StatelessWidget {
                 ),
               ),
             ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class PhotoHero extends StatelessWidget {
-  const PhotoHero({Key? key, this.photo, this.width}) : super(key: key);
-
-  final String? photo;
-  final double? width;
-
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: width,
-      child: Hero(
-        tag: photo!,
-        child: Material(
-          color: Colors.transparent,
-          child: Image.asset(
-            photo!,
-            fit: BoxFit.fitHeight,
           ),
         ),
       ),
