@@ -1,4 +1,4 @@
-import 'package:PanayTranslator/model/language.dart';
+import 'package:panay_translator/model/language.dart';
 
 class Phrase {
   int? phraseID;

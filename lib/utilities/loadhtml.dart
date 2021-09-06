@@ -1,5 +1,5 @@
 import 'dart:async' show Future;
-import 'package:PanayTranslator/model/region.dart';
+import 'package:panay_translator/model/region.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';

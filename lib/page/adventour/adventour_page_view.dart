@@ -1,6 +1,6 @@
-import 'package:PanayTranslator/page/adventour/items.dart';
-import 'package:PanayTranslator/page/adventour/adventour_page_item.dart';
-import 'package:PanayTranslator/page/adventour/page_transformer.dart';
+import 'package:panay_translator/page/adventour/items.dart';
+import 'package:panay_translator/page/adventour/adventour_page_item.dart';
+import 'package:panay_translator/page/adventour/page_transformer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/shims/dart_ui_real.dart';
 

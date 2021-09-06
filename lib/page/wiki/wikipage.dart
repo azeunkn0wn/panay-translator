@@ -1,8 +1,8 @@
-import 'package:PanayTranslator/model/region.dart';
-import 'package:PanayTranslator/utilities/loadhtml.dart';
+import 'package:panay_translator/model/region.dart';
+import 'package:panay_translator/utilities/loadhtml.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:PanayTranslator/utilities/photohero.dart';
+import 'package:panay_translator/utilities/photohero.dart';
 
 class WikiPage extends StatelessWidget {
   final Region region;

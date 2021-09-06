@@ -1,4 +1,4 @@
-# PanayTranslator
+# panay_translator
 
 A new Flutter project.
 

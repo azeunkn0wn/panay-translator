@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:PanayTranslator/utilities/photohero.dart';
+import 'package:panay_translator/utilities/photohero.dart';
 
 class AboutPage extends StatelessWidget {
   @override

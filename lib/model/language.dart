@@ -1,4 +1,4 @@
-import 'package:PanayTranslator/model/region.dart';
+import 'package:panay_translator/model/region.dart';
 import 'package:equatable/equatable.dart';
 
 class Language extends Equatable {

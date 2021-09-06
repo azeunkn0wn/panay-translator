@@ -1,5 +1,5 @@
-import 'package:PanayTranslator/page/adventour/items.dart';
-import 'package:PanayTranslator/page/adventour/page_transformer.dart';
+import 'package:panay_translator/page/adventour/items.dart';
+import 'package:panay_translator/page/adventour/page_transformer.dart';
 import 'package:flutter/material.dart';
 
 class AdventourPageItem extends StatelessWidget {

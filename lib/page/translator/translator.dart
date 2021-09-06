@@ -1,10 +1,10 @@
 import 'dart:async';
 
-import 'package:PanayTranslator/drawer.dart';
-import 'package:PanayTranslator/model/language.dart';
-import 'package:PanayTranslator/model/phrase.dart';
+import 'package:panay_translator/drawer.dart';
+import 'package:panay_translator/model/language.dart';
+import 'package:panay_translator/model/phrase.dart';
 import 'package:flutter/material.dart';
-import 'package:PanayTranslator/utilities/database.dart';
+import 'package:panay_translator/utilities/database.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 
 class Translator extends StatefulWidget {

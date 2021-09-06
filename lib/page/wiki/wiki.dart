@@ -1,9 +1,9 @@
 import 'dart:async';
-import 'package:PanayTranslator/model/region.dart';
-import 'package:PanayTranslator/page/wiki/wikibuttons.dart';
-import 'package:PanayTranslator/utilities/database.dart';
+import 'package:panay_translator/model/region.dart';
+import 'package:panay_translator/page/wiki/wikibuttons.dart';
+import 'package:panay_translator/utilities/database.dart';
 import 'package:flutter/material.dart';
-import 'package:PanayTranslator/drawer.dart';
+import 'package:panay_translator/drawer.dart';
 
 class Wiki extends StatefulWidget {
   @override

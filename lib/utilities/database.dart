@@ -1,8 +1,8 @@
 import 'dart:io';
 
-import 'package:PanayTranslator/model/language.dart';
-import 'package:PanayTranslator/model/phrase.dart';
-import 'package:PanayTranslator/model/region.dart';
+import 'package:panay_translator/model/language.dart';
+import 'package:panay_translator/model/phrase.dart';
+import 'package:panay_translator/model/region.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 import 'dart:async';

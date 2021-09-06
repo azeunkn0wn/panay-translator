@@ -1,9 +1,9 @@
-import 'package:PanayTranslator/model/region.dart';
-import 'package:PanayTranslator/page/about/aboutpage.dart';
-import 'package:PanayTranslator/page/adventour/adventour_page_view.dart';
-import 'package:PanayTranslator/page/translator/translator.dart';
-import 'package:PanayTranslator/page/wiki/wiki.dart';
-import 'package:PanayTranslator/page/wiki/wikipage.dart';
+import 'package:panay_translator/model/region.dart';
+import 'package:panay_translator/page/about/aboutpage.dart';
+import 'package:panay_translator/page/adventour/adventour_page_view.dart';
+import 'package:panay_translator/page/translator/translator.dart';
+import 'package:panay_translator/page/wiki/wiki.dart';
+import 'package:panay_translator/page/wiki/wikipage.dart';
 import 'package:flutter/material.dart';
 
 class RouteGenerator {

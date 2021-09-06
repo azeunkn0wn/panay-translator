@@ -1,4 +1,4 @@
-import 'package:PanayTranslator/routegenerator.dart';
+import 'package:panay_translator/routegenerator.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
