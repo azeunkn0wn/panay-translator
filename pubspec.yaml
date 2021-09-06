@@ -1,4 +1,4 @@
-name: PanayTranslator
+name: panay_translator
 description: A new Flutter project.
 
 publish_to: "none"
@@ -18,9 +18,7 @@ dependencies:
   flutter_tts: ^3.2.2
   google_fonts: ^2.1.0
   path_provider: ^2.0.2
-  # provider: ^6.0.0
   sqflite: ^2.0.0+3
-  transparent_image: ^2.0.0
 
 dev_dependencies:
   flutter_test:
