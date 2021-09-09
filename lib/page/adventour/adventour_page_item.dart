@@ -1,4 +1,4 @@
-import 'package:panay_translator/page/adventour/items.dart';
+import 'package:panay_translator/page/adventour/adventour_page_view.dart';
 import 'package:panay_translator/page/adventour/page_transformer.dart';
 import 'package:flutter/material.dart';
 
@@ -6,10 +6,12 @@ class AdventourPageItem extends StatelessWidget {
   AdventourPageItem({
     required this.item,
     required this.pageVisibility,
+    required this.swapfunction,
   });
 
   final AdventourItems item;
   final PageVisibility pageVisibility;
+  final Function swapfunction;
 
   Widget _applyTextEffects({
     required double translationFactor,
@@ -99,21 +101,26 @@ class AdventourPageItem extends StatelessWidget {
       ),
     );
 
-    return Padding(
-      padding: const EdgeInsets.symmetric(
-        vertical: 16.0,
-        horizontal: 8.0,
-      ),
-      child: Material(
-        elevation: 4.0,
-        borderRadius: BorderRadius.circular(8.0),
-        child: Stack(
-          fit: StackFit.expand,
-          children: [
-            image,
-            imageOverlayGradient,
-            _buildTextContainer(context),
-          ],
+    return InkWell(
+      onTap: () {
+        swapfunction();
+      },
+      child: Padding(
+        padding: const EdgeInsets.symmetric(
+          vertical: 16.0,
+          horizontal: 8.0,
+        ),
+        child: Material(
+          elevation: 4.0,
+          borderRadius: BorderRadius.circular(8.0),
+          child: Stack(
+            fit: StackFit.expand,
+            children: [
+              image,
+              imageOverlayGradient,
+              _buildTextContainer(context),
+            ],
+          ),
         ),
       ),
     );

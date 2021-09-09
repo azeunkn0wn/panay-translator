@@ -19,7 +19,7 @@ class _HtmlLoaderState extends State<HtmlLoader> {
   Future<String> loadAsset() async {
     if (widget.page == 'touristspots') {
       return await rootBundle.loadString(
-          "assets/res/touristspots/${widget.region.regionName!.toLowerCase()}.html");
+          "assets/res/adventour/${widget.region.regionName!.toLowerCase()}.html");
     }
     return await rootBundle.loadString(
         "assets/res/wiki/${widget.region.regionName!.toLowerCase()}.html");
@@ -37,25 +37,30 @@ class _HtmlLoaderState extends State<HtmlLoader> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-        future: htmlData,
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            return Html(
-              data: snapshot.data as String,
-              style: {
-                "*": Style(
-                  backgroundColor: Theme.of(context).canvasColor,
-                )
-              },
-            );
-          } else {
-            return SizedBox(
-              child: CircularProgressIndicator(),
-              width: 60,
-              height: 60,
-            );
-          }
-        });
+    return Container(
+      color: Theme.of(context).canvasColor.withAlpha(128),
+      child: FutureBuilder(
+          future: htmlData,
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              return Html(
+                data: snapshot.data as String,
+                style: {
+                  "*": Style(
+                      // backgroundColor: Theme.of(context).canvasColor,
+                      backgroundColor: Colors.transparent)
+                },
+              );
+            } else {
+              return Center(
+                child: SizedBox(
+                  child: CircularProgressIndicator(),
+                  width: 60,
+                  height: 60,
+                ),
+              );
+            }
+          }),
+    );
   }
 }

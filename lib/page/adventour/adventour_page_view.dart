@@ -1,8 +1,10 @@
-import 'package:panay_translator/page/adventour/items.dart';
+import 'package:panay_translator/model/region.dart';
 import 'package:panay_translator/page/adventour/adventour_page_item.dart';
 import 'package:panay_translator/page/adventour/page_transformer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/shims/dart_ui_real.dart';
+import 'package:panay_translator/utilities/database.dart';
+import 'package:panay_translator/utilities/loadhtml.dart';
 
 class AdventourPageView extends StatefulWidget {
   @override
@@ -11,13 +13,72 @@ class AdventourPageView extends StatefulWidget {
 
 class _AdventourPageViewState extends State<AdventourPageView> {
   late Widget background;
+
+  late Future<List<AdventourItems>> getAdventourItems;
+  late List<AdventourItems> adventourItems;
+  late Widget swappableWidget;
+  late int selectedIndex;
+  int stackIndex = 0;
+  double itemsInfoOpacity = 0.0;
+  double itemsOpacity = 1.0;
+  late List<Widget> _indexedStackChildren;
+
   @override
   void initState() {
-    background = Background(
-      image: adventourItems[0].imageUrl,
-      key: ValueKey(0),
-    );
+    getAdventourItems = getadventourItems();
+    background = Container();
+    swappableWidget = items();
+    selectedIndex = 0;
+    _indexedStackChildren = [
+      items(),
+    ];
     super.initState();
+  }
+
+  Future<List<AdventourItems>> getadventourItems() async {
+    final database = SQLiteDatabaseProvider();
+
+    Map data = await database.getRegionLanguage();
+    Map region = data['regions'];
+    setState(() {
+      adventourItems = [
+        AdventourItems(
+          region: region[1],
+          title: 'We might have the best team spirit ever.',
+          category: 'ILOILO',
+          imageUrl: 'assets/res/adventour/banner/iloilo.jpg',
+        ),
+        AdventourItems(
+          region: region[2],
+          title: 'Writing things together is what we do best!',
+          category: 'AKLAN',
+          imageUrl: 'assets/res/adventour/banner/aklan.jpg',
+        ),
+        AdventourItems(
+          region: region[3],
+          title: 'Occasionally wearing pants is a good idea.',
+          category: 'CAPIZ',
+          imageUrl: 'assets/res/adventour/banner/capiz.jpg',
+        ),
+        AdventourItems(
+          region: region[4],
+          title: 'blahblah blahblah blah',
+          category: 'ANTIQUE',
+          imageUrl: 'assets/res/adventour/banner/antique.jpg',
+        ),
+      ];
+
+      background = Background(
+        image: adventourItems[selectedIndex].imageUrl,
+        key: ValueKey(selectedIndex),
+      );
+      _indexedStackChildren = [
+        items(),
+        itemsInfo(adventourItems[selectedIndex].region)
+      ];
+    });
+
+    return adventourItems;
   }
 
   Widget backgroundWidget(String imageUrl) {
@@ -34,17 +95,39 @@ class _AdventourPageViewState extends State<AdventourPageView> {
     );
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        body: Stack(children: [
-      Positioned.fill(
-        child: AnimatedSwitcher(
-          duration: Duration(seconds: 1),
-          child: background,
+  void switchItems() {
+    setState(() {
+      itemsInfoOpacity = stackIndex == 1 ? 0 : 1;
+      itemsOpacity = stackIndex == 0 ? 0 : 1;
+      stackIndex = stackIndex == 1 ? 0 : 1;
+
+      // swappableWidget = itemsInfo(adventourItems[selectedIndex].region);
+
+      _indexedStackChildren = [
+        items(),
+        itemsInfo(adventourItems[selectedIndex].region)
+      ];
+    });
+  }
+
+  Widget itemsInfo(region) {
+    return AnimatedOpacity(
+      key: ValueKey(selectedIndex),
+      duration: Duration(milliseconds: 300),
+      opacity: itemsInfoOpacity,
+      child: SafeArea(
+        child: SingleChildScrollView(
+          child: HtmlLoader(region, page: 'touristspots'),
         ),
       ),
-      Center(
+    );
+  }
+
+  Widget items() {
+    return AnimatedOpacity(
+      duration: Duration(milliseconds: 300),
+      opacity: itemsOpacity,
+      child: Center(
         child: SizedBox.fromSize(
           size: const Size.fromHeight(500.0),
           child: PageTransformer(
@@ -52,12 +135,18 @@ class _AdventourPageViewState extends State<AdventourPageView> {
               return PageView.builder(
                 onPageChanged: (index) {
                   setState(() {
+                    selectedIndex = index;
                     background = Background(
                         image: adventourItems[index].imageUrl,
                         key: ValueKey(index));
                   });
+                  _indexedStackChildren = [
+                    items(),
+                    itemsInfo(adventourItems[selectedIndex].region)
+                  ];
                 },
-                controller: PageController(viewportFraction: 0.85),
+                controller: PageController(
+                    viewportFraction: 0.85, initialPage: selectedIndex),
                 itemCount: adventourItems.length,
                 itemBuilder: (context, index) {
                   final item = adventourItems[index];
@@ -67,6 +156,7 @@ class _AdventourPageViewState extends State<AdventourPageView> {
                   return AdventourPageItem(
                     item: item,
                     pageVisibility: pageVisibility,
+                    swapfunction: switchItems,
                   );
                 },
               );
@@ -74,7 +164,63 @@ class _AdventourPageViewState extends State<AdventourPageView> {
           ),
         ),
       ),
-    ]));
+    );
+  }
+
+  Future<bool> onWillPop() async {
+    // if (swappedWidget) {
+    //   setState(() {
+    //     swappableWidget = items();
+    //   });
+    if (stackIndex == 1) {
+      switchItems();
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return WillPopScope(
+      onWillPop: onWillPop,
+      child: Scaffold(
+        body: Stack(
+          children: [
+            Positioned.fill(
+              child: AnimatedSwitcher(
+                duration: Duration(seconds: 1),
+                child: background,
+              ),
+            ),
+            FutureBuilder<List<AdventourItems>>(
+              future: getAdventourItems,
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  // List<AdventourItems> adventourItems = snapshot.data!;
+
+                  // return AnimatedSwitcher(
+                  //   duration: const Duration(milliseconds: 300),
+                  //   child: swappableWidget,);
+                  return IndexedStack(
+                    index: stackIndex,
+                    children: _indexedStackChildren,
+                  );
+                } else {
+                  return Center(
+                    child: SizedBox(
+                      child: CircularProgressIndicator(),
+                      width: 60,
+                      height: 60,
+                    ),
+                  );
+                }
+              },
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
 
@@ -100,4 +246,18 @@ class Background extends StatelessWidget {
       ),
     );
   }
+}
+
+class AdventourItems {
+  AdventourItems({
+    required this.region,
+    required this.title,
+    required this.category,
+    required this.imageUrl,
+  });
+
+  final Region region;
+  final String title;
+  final String category;
+  final String imageUrl;
 }

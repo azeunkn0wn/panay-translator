@@ -289,11 +289,14 @@ class _TranslatorState extends State<Translator> {
                             child: languageOrientation('left'),
                           ),
                         ),
-                        RaisedButton(
-                          elevation: 0,
-                          color: Theme.of(context)
-                              .canvasColor, //transparent background color
-                          shape: CircleBorder(),
+                        ElevatedButton(
+                          style: ButtonStyle(
+                              shape: MaterialStateProperty.all(CircleBorder()),
+                              //  color: Theme.of(context)
+                              //     .canvasColor, //transparent background color
+                              backgroundColor: MaterialStateProperty.all<Color>(
+                                  Theme.of(context).canvasColor),
+                              elevation: MaterialStateProperty.all<double>(0)),
                           onPressed: () {
                             setState(() {
                               swapped = !swapped;
@@ -331,10 +334,12 @@ class _TranslatorState extends State<Translator> {
                 ],
               );
             } else {
-              return SizedBox(
-                child: CircularProgressIndicator(),
-                width: 60,
-                height: 60,
+              return Center(
+                child: SizedBox(
+                  child: CircularProgressIndicator(),
+                  width: 60,
+                  height: 60,
+                ),
               );
             }
           }),
