@@ -44,26 +44,26 @@ class _AdventourPageViewState extends State<AdventourPageView> {
       adventourItems = [
         AdventourItems(
           region: region[1],
-          title: 'We might have the best team spirit ever.',
-          category: 'ILOILO',
+          title: 'ILOILO',
+          subtitle: '',
           imageUrl: 'assets/res/adventour/banner/iloilo.jpg',
         ),
         AdventourItems(
           region: region[2],
-          title: 'Writing things together is what we do best!',
-          category: 'AKLAN',
+          title: 'AKLAN',
+          subtitle: '',
           imageUrl: 'assets/res/adventour/banner/aklan.jpg',
         ),
         AdventourItems(
           region: region[3],
-          title: 'Occasionally wearing pants is a good idea.',
-          category: 'CAPIZ',
+          title: 'CAPIZ',
+          subtitle: '',
           imageUrl: 'assets/res/adventour/banner/capiz.jpg',
         ),
         AdventourItems(
           region: region[4],
-          title: 'blahblah blahblah blah',
-          category: 'ANTIQUE',
+          title: 'ANTIQUE',
+          subtitle: '',
           imageUrl: 'assets/res/adventour/banner/antique.jpg',
         ),
       ];
@@ -113,7 +113,8 @@ class _AdventourPageViewState extends State<AdventourPageView> {
   Widget itemsInfo(region) {
     return AnimatedOpacity(
       key: ValueKey(selectedIndex),
-      duration: Duration(milliseconds: 300),
+      duration: Duration(milliseconds: 1000),
+      curve: Curves.decelerate,
       opacity: itemsInfoOpacity,
       child: SafeArea(
         child: SingleChildScrollView(
@@ -126,6 +127,7 @@ class _AdventourPageViewState extends State<AdventourPageView> {
   Widget items() {
     return AnimatedOpacity(
       duration: Duration(milliseconds: 300),
+      curve: Curves.decelerate,
       opacity: itemsOpacity,
       child: Center(
         child: SizedBox.fromSize(
@@ -168,10 +170,6 @@ class _AdventourPageViewState extends State<AdventourPageView> {
   }
 
   Future<bool> onWillPop() async {
-    // if (swappedWidget) {
-    //   setState(() {
-    //     swappableWidget = items();
-    //   });
     if (stackIndex == 1) {
       switchItems();
       return false;
@@ -189,7 +187,7 @@ class _AdventourPageViewState extends State<AdventourPageView> {
           children: [
             Positioned.fill(
               child: AnimatedSwitcher(
-                duration: Duration(seconds: 1),
+                duration: Duration(milliseconds: 500),
                 child: background,
               ),
             ),
@@ -252,12 +250,12 @@ class AdventourItems {
   AdventourItems({
     required this.region,
     required this.title,
-    required this.category,
+    required this.subtitle,
     required this.imageUrl,
   });
 
   final Region region;
   final String title;
-  final String category;
+  final String subtitle;
   final String imageUrl;
 }

@@ -38,7 +38,7 @@ class AdventourPageItem extends StatelessWidget {
     var categoryText = _applyTextEffects(
       translationFactor: 300.0,
       child: Text(
-        item.category,
+        item.subtitle,
         style: textTheme.caption!.copyWith(
           color: Colors.white70,
           fontWeight: FontWeight.bold,

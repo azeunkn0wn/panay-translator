@@ -1,4 +1,4 @@
-package com.example.panay_translator
+package com.aze.PanayTranslator
 
 import io.flutter.embedding.android.FlutterActivity
 

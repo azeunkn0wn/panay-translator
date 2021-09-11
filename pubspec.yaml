@@ -1,5 +1,5 @@
 name: panay_translator
-description: A new Flutter project.
+description: The Panay Island Language Translator.
 
 publish_to: "none"
 
@@ -14,7 +14,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_html: ^2.1.1
-  flutter_launcher_icons: ^0.9.1
+
   flutter_tts: ^3.2.2
   google_fonts: ^2.1.0
   path_provider: ^2.0.2
@@ -23,6 +23,9 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_launcher_icons: ^0.9.1
+  flutter_native_splash: ^1.2.3
+  change_app_package_name: ^1.0.0
 
 flutter:
   uses-material-design: true
@@ -38,3 +41,9 @@ flutter_icons:
   android: "launcher_icon"
   ios: true
   image_path: "assets/icon/icon.png"
+
+flutter_native_splash:
+  color: "#38b6ff"
+  image: assets/images/PITbig.png
+  android: true
+  ios: true
