@@ -1,14 +1,15 @@
 import 'dart:async';
 
-import 'package:panay_translator/drawer.dart';
 import 'package:panay_translator/model/language.dart';
-import 'package:panay_translator/model/phrase.dart';
 import 'package:flutter/material.dart';
+import 'package:panay_translator/model/phrase.dart';
+import 'package:panay_translator/utilities/SP-favorites.dart';
 import 'package:panay_translator/utilities/database.dart';
-import 'package:flutter_tts/flutter_tts.dart';
+import 'package:panay_translator/utilities/tts.dart';
 
 class Translator extends StatefulWidget {
-  Translator({Key? key, String? title}) : super(key: key);
+  Translator({Key? key, String title = 'Translator'})
+      : super(key: key);
   @override
   _TranslatorState createState() => _TranslatorState();
 }
@@ -31,6 +32,11 @@ class _TranslatorState extends State<Translator> {
   final localText = TextEditingController();
   Map? languages;
   Future<Map?>? getLanguages;
+
+  // favorites related variables
+
+  Phrase? phrase;
+  bool isFav = false;
 
   void initState() {
     super.initState();
@@ -73,17 +79,23 @@ class _TranslatorState extends State<Translator> {
 
     if (swapped) {
       result = await db.toLocal(input.replaceAll(regExp, ''));
-
       if (result.isNotEmpty) {
-        output = (result
+        phrase = (result
             .where((phrase) => phrase.language == _selectedLanguage)
-            .elementAt(0)
-            .phrase)!;
+            .elementAt(0));
+        isFav = await Favorites().isFavorite(phrase!);
+        output = phrase!.phrase;
+
         if (punctuation.isNotEmpty && punctuation != "null") {
           output = (output + punctuation);
         }
       } else {
         output = '';
+        phrase = null;
+        isFav = false;
+        setState(() {
+          localText.value = TextEditingValue(text: output!);
+        });
       }
 
       if (output.isNotEmpty) {
@@ -114,6 +126,39 @@ class _TranslatorState extends State<Translator> {
         });
       }
     }
+  }
+
+  toggleFavorite() async {
+    if (phrase == null) {
+      print('phrase is null');
+      return;
+    }
+
+    bool result = await Favorites().addPhrase(phrase!);
+
+    setState(() {
+      isFav = result;
+    });
+  }
+
+  Widget favoritesButton() {
+    late IconData icon;
+
+    if (isFav) {
+      icon = Icons.star_rounded;
+    } else {
+      icon = Icons.star_border_rounded;
+    }
+
+    return IconButton(
+        onPressed: () {
+          toggleFavorite();
+        },
+        icon: Icon(
+          icon,
+          color: Theme.of(context).accentColor,
+          size: 34,
+        )); //
   }
 
   Widget englishBar() {
@@ -232,118 +277,97 @@ class _TranslatorState extends State<Translator> {
     return Text('error');
   }
 
-  // TTS
-  final FlutterTts flutterTts = FlutterTts();
-  Future _speak(String phrase, bool english) async {
-    String spokenPhrase = phrase;
-    if (english) {
-      await flutterTts.setLanguage("eng-US");
-    } else {
-      await flutterTts.setLanguage("fil-PH");
-      spokenPhrase = phrase.replaceAll("-i", "-ee");
-    }
-    await flutterTts.setSpeechRate(0.4);
-
-    await flutterTts.speak(spokenPhrase);
-  }
+  // Future<void> _addToFavorites(Phrase phrase) async {
+  //   Favorites().addPhrase(phrase);
+  // }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-          title: Text('Panay Translator'),
-          textTheme: Theme.of(context).textTheme
-          // GoogleFonts.pacificoTextTheme(
-          //   Theme.of(context).textTheme,
-          // ),
-          ),
-      drawer: MainDrawer(),
-      body: FutureBuilder(
-          future: getLanguages,
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              _dropdownMenuItems =
-                  buildDropDownMenuItems(snapshot.data as Map<int?, Language>);
+    // return Scaffold(
+    //   appBar: AppBar(
+    //       title: Text('Panay Translator'),
+    //       textTheme: Theme.of(context).textTheme
+    //       // GoogleFonts.pacificoTextTheme(
+    //       //   Theme.of(context).textTheme,
+    //       // ),
+    //       ),
+    //   drawer: MainDrawer(),
+    //   body:
+    return FutureBuilder(
+        future: getLanguages,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            _dropdownMenuItems =
+                buildDropDownMenuItems(snapshot.data as Map<int?, Language>);
 
-              if (_selectedLanguage == null) {
-                _selectedLanguage = _dropdownMenuItems![0].value;
-              }
+            if (_selectedLanguage == null) {
+              _selectedLanguage = _dropdownMenuItems![0].value;
+            }
 
-              return ListView(
-                children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      border: Border(
-                        bottom: BorderSide(
-                          color: Colors.grey,
-                        ),
+            return ListView(
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                    border: Border(
+                      bottom: BorderSide(
+                        color: Colors.grey,
                       ),
                     ),
-                    padding: EdgeInsets.symmetric(horizontal: 15),
-                    height: 45,
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: Container(
-                            alignment: Alignment.center,
-                            child: languageOrientation('left'),
-                          ),
-                        ),
-                        ElevatedButton(
-                          style: ButtonStyle(
-                              shape: MaterialStateProperty.all(CircleBorder()),
-                              //  color: Theme.of(context)
-                              //     .canvasColor, //transparent background color
-                              backgroundColor: MaterialStateProperty.all<Color>(
-                                  Theme.of(context).canvasColor),
-                              elevation: MaterialStateProperty.all<double>(0)),
-                          onPressed: () {
-                            setState(() {
-                              swapped = !swapped;
-                              clearTextFields();
-                            });
-                          },
-                          child: Icon(
-                            Icons.swap_horiz,
-                            size: 45,
-                            color: Theme.of(context).primaryColor,
-                          ),
-                        ),
-                        Expanded(
-                          child: Container(
-                            alignment: Alignment.center,
-                            child: languageOrientation('right'),
-                          ),
-                        ),
-                      ],
-                    ),
                   ),
-                  languageOrientation('card1'),
-                  languageOrientation('card2'),
-                  // ElevatedButton(
-                  //   child: (Text("TEST")),
-                  //   onPressed: () {
-                  //     // db.populateDatabase();
-                  //     // db.getAll().then((value) => print(value));
-
-                  //     // db.getLanguage('good morning');
-                  //     // print(_languageList[1].languageID);
-                  //     // getData();
-                  //   },
-                  // )
-                ],
-              );
-            } else {
-              return Center(
-                child: SizedBox(
-                  child: CircularProgressIndicator(),
-                  width: 60,
-                  height: 60,
+                  padding: EdgeInsets.symmetric(horizontal: 15),
+                  height: 45,
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Container(
+                          alignment: Alignment.center,
+                          child: languageOrientation('left'),
+                        ),
+                      ),
+                      ElevatedButton(
+                        style: ButtonStyle(
+                            shape: MaterialStateProperty.all(CircleBorder()),
+                            //  color: Theme.of(context)
+                            //     .canvasColor, //transparent background color
+                            backgroundColor: MaterialStateProperty.all<Color>(
+                                Theme.of(context).canvasColor),
+                            elevation: MaterialStateProperty.all<double>(0)),
+                        onPressed: () {
+                          setState(() {
+                            swapped = !swapped;
+                            clearTextFields();
+                          });
+                        },
+                        child: Icon(
+                          Icons.swap_horiz,
+                          size: 45,
+                          color: Theme.of(context).primaryColor,
+                        ),
+                      ),
+                      Expanded(
+                        child: Container(
+                          alignment: Alignment.center,
+                          child: languageOrientation('right'),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              );
-            }
-          }),
-    );
+                languageOrientation('card1'),
+                languageOrientation('card2'),
+              ],
+            );
+          } else {
+            return Center(
+              child: SizedBox(
+                child: CircularProgressIndicator(),
+                width: 60,
+                height: 60,
+              ),
+            );
+          }
+        });
+    // );
   }
 
   Widget englishCard({bool active = false}) {
@@ -360,7 +384,6 @@ class _TranslatorState extends State<Translator> {
       margin: EdgeInsets.all(5),
       child: Column(
         children: [
-          // Text('English'),
           TextField(
             style: TextStyle(
               fontSize: languageCardSize,
@@ -384,7 +407,6 @@ class _TranslatorState extends State<Translator> {
               ),
             ),
           ),
-
           Container(
             alignment: Alignment.bottomRight,
             child: Visibility(
@@ -393,13 +415,11 @@ class _TranslatorState extends State<Translator> {
                 color: !active
                     ? Theme.of(context).accentColor
                     : Theme.of(context).primaryColor,
-                icon: Icon(Icons.volume_up),
-                onPressed: () => _speak(englishText.text, true),
+                icon: Icon(Icons.volume_up, size: 35),
+                onPressed: () => PhraseTTS().speak(englishText.text, true),
               ),
             ),
           ),
-
-          ///working on TTS button
         ],
       ),
     );
@@ -441,17 +461,21 @@ class _TranslatorState extends State<Translator> {
               ),
             ),
           ),
-          Container(
-            alignment: Alignment.bottomRight,
-            child: Visibility(
-              visible: localText.text == '' ? false : true,
-              child: IconButton(
-                color: !active
-                    ? Theme.of(context).accentColor
-                    : Theme.of(context).primaryColor,
-                icon: Icon(Icons.volume_up),
-                onPressed: () => _speak(localText.text, false),
-              ),
+
+          Visibility(
+            visible: localText.text == '' ? false : true,
+            child: Row(
+              children: [
+                Expanded(child: Container()),
+                Visibility(visible: !active, child: favoritesButton()),
+                IconButton(
+                  color: !active
+                      ? Theme.of(context).accentColor
+                      : Theme.of(context).primaryColor,
+                  icon: Icon(Icons.volume_up, size: 35),
+                  onPressed: () => PhraseTTS().speak(localText.text, false),
+                ),
+              ],
             ),
           ),
         ],

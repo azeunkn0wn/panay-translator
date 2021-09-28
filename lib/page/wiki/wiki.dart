@@ -41,7 +41,9 @@ class _WikiState extends State<Wiki> {
       child: Scaffold(
         appBar:
             AppBar(title: Text('Wiki'), textTheme: Theme.of(context).textTheme),
-        drawer: MainDrawer(),
+        drawer: MainDrawer(
+          currentPage: '/wiki',
+        ),
         body: FutureBuilder(
             future: getRegion,
             builder: (context, AsyncSnapshot<List?> snapshot) {
@@ -65,10 +67,12 @@ class _WikiState extends State<Wiki> {
                   ),
                 );
               } else {
-                return SizedBox(
-                  child: CircularProgressIndicator(),
-                  width: 60,
-                  height: 60,
+                return Center(
+                  child: SizedBox(
+                    child: CircularProgressIndicator(),
+                    width: 60,
+                    height: 60,
+                  ),
                 );
               }
             }),

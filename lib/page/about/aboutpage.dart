@@ -15,11 +15,14 @@ class AboutPage extends StatelessWidget {
               children: [
                 Container(
                   color: Theme.of(context).primaryColor,
+                  // height: MediaQuery.of(context).size.width - 100,
+                  width: MediaQuery.of(context).size.width,
                   child: Container(
-                    margin: EdgeInsets.symmetric(horizontal: 10),
+                    margin: EdgeInsets.all(10),
                     child: PhotoHero(
                       photo:
                           'assets/images/Panay Island Translator (round).png',
+                      width: MediaQuery.of(context).size.width,
                     ),
                   ),
                 ),

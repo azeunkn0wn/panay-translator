@@ -1,3 +1,4 @@
+import 'package:panay_translator/drawer.dart';
 import 'package:panay_translator/model/region.dart';
 import 'package:panay_translator/page/adventour/adventour_page_item.dart';
 import 'package:panay_translator/page/adventour/page_transformer.dart';
@@ -148,7 +149,7 @@ class _AdventourPageViewState extends State<AdventourPageView> {
                   ];
                 },
                 controller: PageController(
-                    viewportFraction: 0.85, initialPage: selectedIndex),
+                    viewportFraction: 0.75, initialPage: selectedIndex),
                 itemCount: adventourItems.length,
                 itemBuilder: (context, index) {
                   final item = adventourItems[index];
@@ -183,6 +184,10 @@ class _AdventourPageViewState extends State<AdventourPageView> {
     return WillPopScope(
       onWillPop: onWillPop,
       child: Scaffold(
+        drawer: MainDrawer(
+          key: widget.key,
+          currentPage: '/adventour',
+        ),
         body: Stack(
           children: [
             Positioned.fill(

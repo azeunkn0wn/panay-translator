@@ -1,17 +1,29 @@
+import 'package:equatable/equatable.dart';
 import 'package:panay_translator/model/language.dart';
+import 'package:json_annotation/json_annotation.dart';
+part 'phrase.g.dart';
 
-class Phrase {
-  int? phraseID;
-  String? phrase;
-  Language language;
+@JsonSerializable(explicitToJson: true)
+class Phrase extends Equatable {
+  final int phraseID;
+  final String phrase;
+  final Language language;
 
   Phrase(this.phraseID, this.phrase, this.language);
+  factory Phrase.fromJson(Map<String, dynamic> json) {
+    return _$PhraseFromJson(json);
+  }
+
+  Map<String, dynamic> toJson() => _$PhraseToJson(this);
 
   factory Phrase.fromMap(map) {
-    Language lang = Language.fromMap(map);
+    print('phrase');
+    print(map);
+    Language lang = Language.fromMap(map['language']);
+
     return Phrase(
-      map['phrase_id'] as int?,
-      map['phrase'] as String?,
+      map['phraseID'] as int,
+      map['phrase'] as String,
       lang,
     );
   }
@@ -25,6 +37,9 @@ class Phrase {
 
   @override
   String toString() {
-    return "$language: $phrase";
+    return "Phrase($phrase, $language)";
   }
+
+  @override
+  List<Object?> get props => [phrase];
 }
