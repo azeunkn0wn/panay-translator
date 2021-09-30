@@ -348,9 +348,11 @@ packages:
   font_awesome_flutter:
     dependency: "direct main"
     description:
-      path: "P:/PROJECTS/font_awesome_flutter"
-      relative: false
-    source: path
+      path: "."
+      ref: HEAD
+      resolved-ref: c5a21a4d69cc92b42802bd4cf7e5574c76b48aa7
+      url: "https://github.com/azeunkn0wn/aze_faf.git"
+    source: git
     version: "9.1.0"
   frontend_server_client:
     dependency: transitive

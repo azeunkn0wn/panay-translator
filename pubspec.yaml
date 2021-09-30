@@ -47,8 +47,7 @@ flutter:
 
 dependency_overrides:
   font_awesome_flutter:
-    path: P:/PROJECTS/font_awesome_flutter
-
+    git: https://github.com/azeunkn0wn/aze_faf.git
 flutter_icons:
   android: "launcher_icon"
   ios: true
