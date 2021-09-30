@@ -41,5 +41,5 @@ class Phrase extends Equatable {
   }
 
   @override
-  List<Object?> get props => [phrase];
+  List<Object?> get props => [phraseID];
 }

@@ -2,6 +2,7 @@ import 'package:panay_translator/model/region.dart';
 import 'package:panay_translator/page/about/aboutpage.dart';
 import 'package:panay_translator/page/adventour/adventour_page_view.dart';
 import 'package:panay_translator/page/adventour/touristspot_page.dart';
+import 'package:panay_translator/page/phrasebook/phrasebook_page.dart';
 import 'package:panay_translator/page/translator/mainpage.dart';
 import 'package:panay_translator/page/wiki/wiki.dart';
 import 'package:panay_translator/page/wiki/wikipage.dart';
@@ -13,9 +14,8 @@ class RouteGenerator {
     print(settings.name);
 
     switch (settings.name) {
-
-      // case '/homepage':
-      //   return MaterialPageRoute(builder: (_) => TranslatorFavoritePage());
+      case '/':
+        return MaterialPageRoute(builder: (_) => MainPage());
       case ('/translator'):
         return MaterialPageRoute(
             builder: (_) => MainPage(
@@ -30,6 +30,9 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => Wiki());
       case '/wikipage':
         return MaterialPageRoute(builder: (_) => WikiPage(args as Region));
+      case '/phrasebook':
+        return MaterialPageRoute(builder: (_) => PhrasebookPage());
+
       case '/touristspots':
         return MaterialPageRoute(
             builder: (_) => TouristSpots(region: args as Region));

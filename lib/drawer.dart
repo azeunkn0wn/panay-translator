@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:panay_translator/page/translator/mainpage.dart';
 import 'package:panay_translator/utilities/photohero.dart';
 
 class MainDrawer extends StatelessWidget {
@@ -9,6 +8,16 @@ class MainDrawer extends StatelessWidget {
       : super(key: key);
   final String currentPage;
   final GlobalKey<dynamic>? parentKey;
+
+  static const double iconSize = 35;
+
+  void _onTapNavigate(BuildContext context, String newPage) {
+    if (currentPage == newPage) {
+      Navigator.pop(context);
+    } else {
+      Navigator.pushNamed(context, newPage);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +42,7 @@ class MainDrawer extends StatelessWidget {
               CustomDrawerListTile(
                   icon: FaIcon(
                     FontAwesomeIcons.lightLanguage,
-                    size: 40,
+                    size: iconSize,
                   ),
                   title: 'Translator',
                   onTap: () {
@@ -54,16 +63,16 @@ class MainDrawer extends StatelessWidget {
               CustomDrawerListTile(
                   icon: FaIcon(
                     FontAwesomeIcons.wikipediaW,
-                    size: 40,
+                    size: iconSize,
                   ),
                   title: 'Wiki',
-                  onTap: () => {
-                        Navigator.pushNamed(context, "/wiki"),
-                      }),
+                  onTap: () {
+                    _onTapNavigate(context, '/wiki');
+                  }),
               CustomDrawerListTile(
                   icon: FaIcon(
                     FontAwesomeIcons.lightStar,
-                    size: 40,
+                    size: iconSize,
                   ),
                   title: 'Favorites',
                   onTap: () {
@@ -82,35 +91,39 @@ class MainDrawer extends StatelessWidget {
                     }
                   }),
               CustomDrawerListTile(
-                // icon: Image.asset("assets/icon/phrasebook.png"),
                 icon: FaIcon(
                   FontAwesomeIcons.lightBookOpen,
-                  size: 40,
+                  size: iconSize,
                 ),
                 title: 'Phrasebook',
-                onTap: () => {},
+                onTap: () {
+                  _onTapNavigate(context, '/phrasebook');
+                },
               ),
               CustomDrawerListTile(
                   // icon: Image.asset("assets/icon/adventour.png"),
                   icon: FaIcon(
                     FontAwesomeIcons.lightMapMarkedAlt,
-                    size: 40,
+                    size: iconSize,
                   ),
                   title: 'Adventour',
-                  onTap: () => {
-                        Navigator.pushNamed(context, "/adventour"),
-                      }),
+                  onTap: () {
+                    _onTapNavigate(context, '/adventour');
+                  }),
               CustomDrawerListTile(
-                icon: Icon(Icons.error_outline, size: 50),
+                icon: FaIcon(
+                  FontAwesomeIcons.lightInfoCircle,
+                  size: iconSize,
+                ),
                 title: 'About',
-                onTap: () => {
-                  Navigator.pushReplacementNamed(context, "/about"),
+                onTap: () {
+                  _onTapNavigate(context, '/about');
                 },
               ),
               CustomDrawerListTile(
                 icon: FaIcon(
                   FontAwesomeIcons.lightSignOut,
-                  size: 40,
+                  size: iconSize,
                 ),
                 title: 'Exit',
                 onTap: () => {SystemNavigator.pop()},

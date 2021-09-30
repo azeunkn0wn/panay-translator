@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:panay_translator/drawer.dart';
 import 'package:panay_translator/model/phrase.dart';
 import 'package:panay_translator/utilities/SP-favorites.dart';
 
@@ -40,38 +39,41 @@ class FavoritesPageState extends State<FavoritesPage> {
     return FutureBuilder(
       future: _getfavoriteList,
       builder: (context, AsyncSnapshot<List<Phrase>> snapshot) {
-        print('rebuild');
         if (snapshot.connectionState == ConnectionState.done) {
           if (snapshot.hasData && snapshot.data!.length > 0) {
-            print(snapshot.data);
             return Container(
               child: ListView.builder(
                 itemCount: snapshot.data!.length,
                 itemBuilder: (_, index) {
                   return Slidable(
                     secondaryActions: [
-                      IconSlideAction(
-                        caption: 'remove',
-                        color: Colors.red[300],
-                        icon: Icons.more_horiz,
-                        onTap: () {
-                          removeFromFavorites(snapshot.data![index]);
-                        },
+                      Card(
+                        child: IconSlideAction(
+                          caption: 'remove',
+                          color: Colors.red[300],
+                          icon: Icons.delete_outline_rounded,
+                          onTap: () {
+                            removeFromFavorites(snapshot.data![index]);
+                          },
+                        ),
                       ),
                     ],
                     actionPane: SlidableScrollActionPane(),
                     actionExtentRatio: 0.25,
-                    child: ListTile(
-                      onLongPress: () {
-                        PhraseTTS().speak(snapshot.data![index].phrase, false);
-                      },
-                      trailing: IconButton(
-                          onPressed: () {
-                            PhraseTTS()
-                                .speak(snapshot.data![index].phrase, false);
-                          },
-                          icon: Icon(Icons.volume_up_rounded)),
-                      title: Text(snapshot.data![index].phrase),
+                    child: Card(
+                      child: ListTile(
+                        onLongPress: () {
+                          PhraseTTS()
+                              .speak(snapshot.data![index].phrase, false);
+                        },
+                        trailing: IconButton(
+                            onPressed: () {
+                              PhraseTTS()
+                                  .speak(snapshot.data![index].phrase, false);
+                            },
+                            icon: Icon(Icons.volume_up_rounded)),
+                        title: Text(snapshot.data![index].phrase),
+                      ),
                     ),
                   );
                 },

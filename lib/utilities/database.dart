@@ -97,7 +97,7 @@ class SQLiteDatabaseProvider {
     'antique': Language(4, "Kinaray-a", region: regionList['antique']),
   };
   static Map<String, List<String>> translationData = {
-    "english": ["ilonggo", "akeanon", "hiligaynon", "kinaray-a"],
+    // "english": ["ilonggo", "akeanon", "hiligaynon", "kinaray-a"],
     "good morning": [
       "ma-ayong aga",
       "mayad nga agahon",
@@ -392,6 +392,36 @@ class SQLiteDatabaseProvider {
     JOIN Language lang ON eng.languageID = lang.languageID   
   WHERE (loc.phrase = ? AND loc.languageID = ?);
   ''', [phrase, languageID]);
+
+    for (Map<String, dynamic> phrase in phrases) {
+      Map<String, dynamic> _phrase = Map<String, dynamic>.from(phrase);
+      Map<String, dynamic> lang = {
+        'language': {
+          'language': _phrase.remove('language'),
+          'languageID': _phrase.remove('languageID')
+        }
+      };
+
+      _phrase.addAll(lang);
+
+      result.add(Phrase.fromMap(_phrase));
+    }
+    return result;
+  }
+
+  Future<List<Phrase>> getPhrases(int? languageID) async {
+    final Database? db = await database;
+    if (useAltDataProvider) {
+      return [];
+    }
+    List<Phrase> result = [];
+
+    final List<Map<String, dynamic>> phrases = await db!.rawQuery('''
+    SELECT ph.phraseID, ph.phrase, lang.languageID, lang.language
+    FROM Phrase ph
+    JOIN Language lang ON ph.languageID = lang.languageID      
+    WHERE (ph.languageID = ?);
+  ''', [languageID]);
 
     for (Map<String, dynamic> phrase in phrases) {
       Map<String, dynamic> _phrase = Map<String, dynamic>.from(phrase);
