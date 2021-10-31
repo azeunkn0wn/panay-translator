@@ -3,6 +3,8 @@ import 'package:panay_translator/page/about/aboutpage.dart';
 import 'package:panay_translator/page/adventour/adventour_page_view.dart';
 import 'package:panay_translator/page/adventour/touristspot_page.dart';
 import 'package:panay_translator/page/phrasebook/phrasebook_page.dart';
+import 'package:panay_translator/page/settings/language_picker.dart';
+import 'package:panay_translator/page/settings/settings_page.dart';
 import 'package:panay_translator/page/translator/mainpage.dart';
 import 'package:panay_translator/page/wiki/wiki.dart';
 import 'package:panay_translator/page/wiki/wikipage.dart';
@@ -39,6 +41,11 @@ class RouteGenerator {
 
       case '/adventour':
         return MaterialPageRoute(builder: (_) => AdventourPageView());
+      case '/settings':
+        return MaterialPageRoute(builder: (_) => SettingsPage());
+      case '/languagePicker':
+        return MaterialPageRoute(builder: (_) => LanguagePickerPage());
+
       case '/about':
         return MaterialPageRoute(builder: (_) => AboutPage());
 

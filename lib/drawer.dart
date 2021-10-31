@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:panay_translator/utilities/photohero.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MainDrawer extends StatelessWidget {
   const MainDrawer({Key? key, required this.currentPage, this.parentKey})
@@ -21,7 +22,6 @@ class MainDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(currentPage);
     return Drawer(
       child: SafeArea(
         child: SingleChildScrollView(
@@ -44,7 +44,8 @@ class MainDrawer extends StatelessWidget {
                     FontAwesomeIcons.lightLanguage,
                     size: iconSize,
                   ),
-                  title: 'Translator',
+                  title:
+                      AppLocalizations.of(context)!.translator, //'Translator',
                   onTap: () {
                     switch (currentPage) {
                       case ('/translator'):
@@ -118,6 +119,16 @@ class MainDrawer extends StatelessWidget {
                 title: 'About',
                 onTap: () {
                   _onTapNavigate(context, '/about');
+                },
+              ),
+              CustomDrawerListTile(
+                icon: FaIcon(
+                  FontAwesomeIcons.lightCog,
+                  size: iconSize,
+                ),
+                title: 'Settings',
+                onTap: () {
+                  _onTapNavigate(context, '/settings');
                 },
               ),
               CustomDrawerListTile(

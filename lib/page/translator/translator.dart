@@ -3,13 +3,12 @@ import 'dart:async';
 import 'package:panay_translator/model/language.dart';
 import 'package:flutter/material.dart';
 import 'package:panay_translator/model/phrase.dart';
-import 'package:panay_translator/utilities/SP-favorites.dart';
+import 'package:panay_translator/utilities/sharedPreferences/favorites.dart';
 import 'package:panay_translator/utilities/database.dart';
 import 'package:panay_translator/utilities/tts.dart';
 
 class Translator extends StatefulWidget {
-  Translator({Key? key, String title = 'Translator'})
-      : super(key: key);
+  Translator({Key? key, String title = 'Translator'}) : super(key: key);
   @override
   _TranslatorState createState() => _TranslatorState();
 }
@@ -49,6 +48,7 @@ class _TranslatorState extends State<Translator> {
 
   Future<Map?> getData() async {
     // await db.populateDatabase();
+
     Map data = await db.getRegionLanguage();
     languages = data['languages'];
     print('finished getting languages from database');

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:panay_translator/model/phrase.dart';
-import 'package:panay_translator/utilities/SP-favorites.dart';
+import 'package:panay_translator/utilities/sharedPreferences/favorites.dart';
 
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:panay_translator/utilities/tts.dart';
