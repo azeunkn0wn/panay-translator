@@ -4,6 +4,8 @@ import 'package:panay_translator/model/phrase.dart';
 import 'package:panay_translator/utilities/database.dart';
 import 'package:panay_translator/utilities/tts.dart';
 
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 class PhrasebookPage extends StatefulWidget {
   PhrasebookPage({Key? key, String title = 'Favorites'}) : super(key: key);
 
@@ -28,7 +30,7 @@ class PhrasebookPageState extends State<PhrasebookPage> {
         currentPage: '/phrasebook',
       ),
       appBar: AppBar(
-        title: Text('Phrasebook'),
+        title: Text(AppLocalizations.of(context)!.phrasebook),
       ),
       body: FutureBuilder(
         future: _getEnglishPhrases,
@@ -64,7 +66,7 @@ class PhrasebookPageState extends State<PhrasebookPage> {
                   children: [
                     Icon(Icons.error_outline_rounded,
                         size: 100, color: Colors.grey),
-                    Text("Error",
+                    Text(AppLocalizations.of(context)!.error,
                         style: TextStyle(color: Colors.grey, fontSize: 30))
                   ],
                 ),
@@ -77,10 +79,10 @@ class PhrasebookPageState extends State<PhrasebookPage> {
                   children: [
                     Icon(Icons.star_border_rounded,
                         size: 150, color: Colors.grey),
-                    Text("No Favorites",
+                    Text(AppLocalizations.of(context)!.noPhrasebook,
                         style: TextStyle(color: Colors.grey, fontSize: 30)),
                     Text(
-                      "Your favorite translations will appear here",
+                      AppLocalizations.of(context)!.noPhrasebookMessage,
                       style: TextStyle(
                         color: Colors.grey,
                       ),

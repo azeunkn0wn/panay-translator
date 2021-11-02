@@ -3,7 +3,23 @@
   "@language": {
     "description": "Default Language"
   },  
+  "languages": "Languages", 
+  "translator": "Translator",   
+  "favorites": "Favorites",
+  "wiki": "Wiki",
+  "adventour": "Adventour",
+  "about": "About",
+  "phrasebook": "Phrasebook",
   "settings": "Settings",
-  "languages": "Languages",
-  "translator": "Translator"
+  "exit": "Exit",
+
+  "error": "Error",
+  "pageNotFound": "Page not found",
+  
+  "noPhrasebook":"No Phrases",
+  "noPhrasebookMessage": "List of Phrases will appear here",
+  
+  "noFavorites":"No Favorites",
+  "noFavoritesMessage": "Your favorite translations will appear here"
+
 }

@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:panay_translator/utilities/sharedPreferences/settings.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
@@ -40,7 +39,7 @@ class MyApp extends StatelessWidget {
           final provider = Provider.of<LocaleProvider>(context);
           print(provider.locale);
           return MaterialApp(
-            title: 'Panay Translator',
+            title: "Panay Translator",
             localizationsDelegates: [
               AppLocalizations.delegate,
               GlobalMaterialLocalizations.delegate,

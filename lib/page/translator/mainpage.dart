@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:panay_translator/drawer.dart';
 import 'package:panay_translator/page/translator/favorites.dart';
 import 'package:panay_translator/page/translator/translator.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MainPage extends StatefulWidget {
   MainPage({Key? key, this.selectedPageIndex = 0}) : super(key: key);
@@ -36,23 +37,30 @@ class MainPageState extends State<MainPage> {
     changePage(_selectedPageIndex);
   }
 
-  List<String> _titleList = ['Translator', 'Favorites'];
+  List<String> _titleList(context) {
+    return [
+      AppLocalizations.of(context)!.translator,
+      AppLocalizations.of(context)!.favorites
+    ];
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(_titleList[_selectedPageIndex])),
+      appBar: AppBar(title: Text(_titleList(context)[_selectedPageIndex])),
       drawer: MainDrawer(
           parentKey: widget.key,
-          currentPage: '/' + _titleList[_selectedPageIndex].toLowerCase()),
+          currentPage:
+              '/' + _titleList(context)[_selectedPageIndex].toLowerCase()),
       bottomNavigationBar: BottomNavigationBar(
         onTap: _onTapBar,
         currentIndex: _selectedPageIndex,
         items: [
           BottomNavigationBarItem(
-              icon: Icon(Icons.portrait), label: 'Translator'),
+              icon: Icon(Icons.portrait), label: _titleList(context)[0]),
           BottomNavigationBarItem(
-              icon: Icon(Icons.star_border_rounded), label: 'Favorites'),
+              icon: Icon(Icons.star_border_rounded),
+              label: _titleList(context)[1]),
         ],
       ),
       body: PageView(

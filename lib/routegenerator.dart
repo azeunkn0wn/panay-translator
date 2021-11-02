@@ -9,6 +9,7 @@ import 'package:panay_translator/page/translator/mainpage.dart';
 import 'package:panay_translator/page/wiki/wiki.dart';
 import 'package:panay_translator/page/wiki/wikipage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -60,18 +61,23 @@ class RouteGenerator {
       return false;
     }
 
-    return MaterialPageRoute(builder: (context) {
-      return WillPopScope(
-        onWillPop: () => _onPop(context),
-        child: Scaffold(
+    return MaterialPageRoute(
+      builder: (context) {
+        return WillPopScope(
+          onWillPop: () => _onPop(context),
+          child: Scaffold(
             appBar: AppBar(
               leading: BackButton(),
               automaticallyImplyLeading: true,
               centerTitle: true,
-              title: Text('Error'),
+              title: Text(AppLocalizations.of(context)!.error),
             ),
-            body: Center(child: Text('Page not found'))),
-      );
-    });
+            body: Center(
+              child: Text(AppLocalizations.of(context)!.pageNotFound),
+            ),
+          ),
+        );
+      },
+    );
   }
 }

@@ -6,6 +6,7 @@ import 'package:panay_translator/model/phrase.dart';
 import 'package:panay_translator/utilities/sharedPreferences/favorites.dart';
 import 'package:panay_translator/utilities/database.dart';
 import 'package:panay_translator/utilities/tts.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Translator extends StatefulWidget {
   Translator({Key? key, String title = 'Translator'}) : super(key: key);
@@ -274,7 +275,7 @@ class _TranslatorState extends State<Translator> {
     if (position == 'card2') {
       return cards[1];
     }
-    return Text('error');
+    return Text(AppLocalizations.of(context)!.error);
   }
 
   // Future<void> _addToFavorites(Phrase phrase) async {
@@ -283,16 +284,6 @@ class _TranslatorState extends State<Translator> {
 
   @override
   Widget build(BuildContext context) {
-    // return Scaffold(
-    //   appBar: AppBar(
-    //       title: Text('Panay Translator'),
-    //       textTheme: Theme.of(context).textTheme
-    //       // GoogleFonts.pacificoTextTheme(
-    //       //   Theme.of(context).textTheme,
-    //       // ),
-    //       ),
-    //   drawer: MainDrawer(),
-    //   body:
     return FutureBuilder(
         future: getLanguages,
         builder: (context, snapshot) {
@@ -439,7 +430,6 @@ class _TranslatorState extends State<Translator> {
       margin: EdgeInsets.all(5),
       child: Column(
         children: [
-          // Text(language.name),
           TextField(
             style: TextStyle(
               fontSize: languageCardSize,
@@ -461,7 +451,6 @@ class _TranslatorState extends State<Translator> {
               ),
             ),
           ),
-
           Visibility(
             visible: localText.text == '' ? false : true,
             child: Row(

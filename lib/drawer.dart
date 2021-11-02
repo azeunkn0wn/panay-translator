@@ -66,7 +66,7 @@ class MainDrawer extends StatelessWidget {
                     FontAwesomeIcons.wikipediaW,
                     size: iconSize,
                   ),
-                  title: 'Wiki',
+                  title: AppLocalizations.of(context)!.wiki,
                   onTap: () {
                     _onTapNavigate(context, '/wiki');
                   }),
@@ -75,7 +75,7 @@ class MainDrawer extends StatelessWidget {
                     FontAwesomeIcons.lightStar,
                     size: iconSize,
                   ),
-                  title: 'Favorites',
+                  title: AppLocalizations.of(context)!.favorites,
                   onTap: () {
                     switch (currentPage) {
                       case ('/favorites'):
@@ -96,7 +96,7 @@ class MainDrawer extends StatelessWidget {
                   FontAwesomeIcons.lightBookOpen,
                   size: iconSize,
                 ),
-                title: 'Phrasebook',
+                title: AppLocalizations.of(context)!.phrasebook,
                 onTap: () {
                   _onTapNavigate(context, '/phrasebook');
                 },
@@ -107,7 +107,7 @@ class MainDrawer extends StatelessWidget {
                     FontAwesomeIcons.lightMapMarkedAlt,
                     size: iconSize,
                   ),
-                  title: 'Adventour',
+                  title: AppLocalizations.of(context)!.adventour,
                   onTap: () {
                     _onTapNavigate(context, '/adventour');
                   }),
@@ -116,7 +116,7 @@ class MainDrawer extends StatelessWidget {
                   FontAwesomeIcons.lightInfoCircle,
                   size: iconSize,
                 ),
-                title: 'About',
+                title: AppLocalizations.of(context)!.about,
                 onTap: () {
                   _onTapNavigate(context, '/about');
                 },
@@ -126,7 +126,7 @@ class MainDrawer extends StatelessWidget {
                   FontAwesomeIcons.lightCog,
                   size: iconSize,
                 ),
-                title: 'Settings',
+                title: AppLocalizations.of(context)!.settings,
                 onTap: () {
                   _onTapNavigate(context, '/settings');
                 },
@@ -136,7 +136,7 @@ class MainDrawer extends StatelessWidget {
                   FontAwesomeIcons.lightSignOut,
                   size: iconSize,
                 ),
-                title: 'Exit',
+                title: AppLocalizations.of(context)!.exit,
                 onTap: () => {SystemNavigator.pop()},
               ),
             ],

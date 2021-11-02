@@ -4,6 +4,7 @@ import 'package:panay_translator/page/wiki/wikibuttons.dart';
 import 'package:panay_translator/utilities/database.dart';
 import 'package:flutter/material.dart';
 import 'package:panay_translator/drawer.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Wiki extends StatefulWidget {
   @override
@@ -39,8 +40,9 @@ class _WikiState extends State<Wiki> {
   Widget build(BuildContext context) {
     return Container(
       child: Scaffold(
-        appBar:
-            AppBar(title: Text('Wiki'), textTheme: Theme.of(context).textTheme),
+        appBar: AppBar(
+            title: Text(AppLocalizations.of(context)!.wiki),
+            textTheme: Theme.of(context).textTheme),
         drawer: MainDrawer(
           currentPage: '/wiki',
         ),

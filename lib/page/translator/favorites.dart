@@ -5,6 +5,8 @@ import 'package:panay_translator/utilities/sharedPreferences/favorites.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:panay_translator/utilities/tts.dart';
 
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 class FavoritesPage extends StatefulWidget {
   FavoritesPage({Key? key, String title = 'Favorites'}) : super(key: key);
 
@@ -30,12 +32,6 @@ class FavoritesPageState extends State<FavoritesPage> {
 
   @override
   Widget build(BuildContext context) {
-    // return Scaffold(
-    //   drawer: MainDrawer(),
-    //   appBar: AppBar(
-    //     title: Text('Favorites'),
-    //   ),
-    //   body:
     return FutureBuilder(
       future: _getfavoriteList,
       builder: (context, AsyncSnapshot<List<Phrase>> snapshot) {
@@ -87,7 +83,7 @@ class FavoritesPageState extends State<FavoritesPage> {
                 children: [
                   Icon(Icons.error_outline_rounded,
                       size: 100, color: Colors.grey),
-                  Text("Error",
+                  Text(AppLocalizations.of(context)!.error,
                       style: TextStyle(color: Colors.grey, fontSize: 30))
                 ],
               ),
@@ -100,10 +96,10 @@ class FavoritesPageState extends State<FavoritesPage> {
                 children: [
                   Icon(Icons.star_border_rounded,
                       size: 150, color: Colors.grey),
-                  Text("No Favorites",
+                  Text(AppLocalizations.of(context)!.noFavorites,
                       style: TextStyle(color: Colors.grey, fontSize: 30)),
                   Text(
-                    "Your favorite translations will appear here",
+                    AppLocalizations.of(context)!.noFavoritesMessage,
                     style: TextStyle(
                       color: Colors.grey,
                     ),

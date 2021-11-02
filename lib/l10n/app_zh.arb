@@ -1,9 +1,23 @@
 {
-  "language": "汉语",
-
-  
+  "language": "汉语",  
   "settings": "设置",
   "languages": "语言",
-  "translator": "译者"
+  "translator": "译者", 
+  "favorites": "收藏夹",
+  "wiki": "维基",
+  "adventour": "游览",
+  "about": "大约",
+  "phrasebook": "短语集",
+  "settings": "设置",
+  "exit": "走",
+
+  "error": "错误",
+  "pageNotFound": "网页未找到",
+  
+  "noPhrasebook":"没有短语",
+  "noPhrasebookMessage": "短语列表将出现在这里",
+  
+  "noFavorites":"没有收藏夹",
+  "noFavoritesMessage": "您最喜欢的翻译会出现在这里"
 
 }

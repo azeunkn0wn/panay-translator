@@ -1,6 +1,22 @@
 {
   "language": "日本語",
   "settings": "セッティング",
-  "languages": "외국어",
-  "translator": "翻訳者"
+  "languages": "言語",
+  "translator": "翻訳者",
+  "favorites": "お気に入り",
+  "wiki": "ウィキ",
+  "adventour": "旅行",
+  "about": "だいたい",
+  "phrasebook": "会話集",
+  "settings": "設定",
+  "exit": "終了",
+
+  "error": "エラー",
+  "pageNotFound": "ページが見つかりません",
+  
+  "noPhrasebook":"句なし",
+  "noPhrasebookMessage": "フレーズのリストはここに表示されます",
+  
+  "noFavorites":"お気に入りなし",
+  "noFavoritesMessage": "お気に入りの翻訳がここに表示されます"
 }

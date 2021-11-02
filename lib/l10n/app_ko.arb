@@ -2,5 +2,21 @@
   "language": "한국어",
   "settings": "설정",
   "languages": "외국어",
-  "translator":"역자"
+  "translator":"역자",
+  "favorites": "즐겨찾기",
+  "wiki": "위키",
+  "adventour": "관광",
+  "about": "정보",
+  "phrasebook": "외국어 숙어집",
+  "settings": "설정",
+  "exit": "퇴거하다",
+
+  "error": "오류",
+  "pageNotFound": "페이지를 찾을 수 없음",
+  
+  "noPhrasebook":"문구 없음",
+  "noPhrasebookMessage": "구문 목록이 여기에 표시됩니다",
+  
+  "noFavorites":"즐겨찾기가 없습니다",
+  "noFavoritesMessage": "좋아하는 번역이 여기에 표시됩니다"
 }

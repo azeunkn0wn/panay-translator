@@ -13,7 +13,10 @@ class LocaleProvider extends ChangeNotifier {
   }
 
   getLocaleSettings() async {
-    Locale locale = Locale(await Settings().getSettings('languageCode'));
+    String languageCode = await Settings().getSettings('languageCode');
+    if (languageCode.isEmpty) languageCode = 'en';
+
+    Locale locale = Locale(languageCode);
     _locale = locale;
     notifyListeners();
   }
