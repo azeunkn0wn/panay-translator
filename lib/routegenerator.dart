@@ -1,7 +1,7 @@
 import 'package:panay_translator/model/region.dart';
 import 'package:panay_translator/page/about/aboutpage.dart';
 import 'package:panay_translator/page/adventour/adventour_page_view.dart';
-import 'package:panay_translator/page/adventour/touristspot_page.dart';
+
 import 'package:panay_translator/page/phrasebook/phrasebook_page.dart';
 import 'package:panay_translator/page/settings/language_picker.dart';
 import 'package:panay_translator/page/settings/settings_page.dart';
@@ -35,10 +35,6 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => WikiPage(args as Region));
       case '/phrasebook':
         return MaterialPageRoute(builder: (_) => PhrasebookPage());
-
-      case '/touristspots':
-        return MaterialPageRoute(
-            builder: (_) => TouristSpots(region: args as Region));
 
       case '/adventour':
         return MaterialPageRoute(builder: (_) => AdventourPageView());

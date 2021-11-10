@@ -119,7 +119,7 @@ class _AdventourPageViewState extends State<AdventourPageView> {
       opacity: itemsInfoOpacity,
       child: SafeArea(
         child: SingleChildScrollView(
-          child: HtmlLoader(region, page: 'touristspots'),
+          child: HtmlLoader(region, page: 'adventour'),
         ),
       ),
     );

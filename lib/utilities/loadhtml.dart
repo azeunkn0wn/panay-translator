@@ -14,33 +14,35 @@ class HtmlLoader extends StatefulWidget {
 }
 
 class _HtmlLoaderState extends State<HtmlLoader> {
-  Future<String>? htmlData;
+  Future<String> loadAsset(String languageCode) async {
+    String page = widget.page;
+    String filename = "${widget.region.regionName!.toLowerCase()}.html";
 
-  Future<String> loadAsset() async {
-    if (widget.page == 'touristspots') {
-      return await rootBundle.loadString(
-          "assets/res/adventour/${widget.region.regionName!.toLowerCase()}.html");
+    if (languageCode != 'en') {
+      filename =
+          "${widget.region.regionName!.toLowerCase()}_$languageCode.html";
     }
-    return await rootBundle.loadString(
-        "assets/res/wiki/${widget.region.regionName!.toLowerCase()}.html");
+
+    return await rootBundle.loadString("assets/res/$page/$filename");
   }
 
   @override
   void initState() {
-    htmlData = getHtmlData();
     super.initState();
   }
 
-  Future<String> getHtmlData() async {
-    return await loadAsset();
+  Future<String> getHtmlData(String languageCode) async {
+    return await loadAsset(languageCode);
   }
 
   @override
   Widget build(BuildContext context) {
+    String languageCode = Localizations.localeOf(context).languageCode;
+
     return Container(
       color: Theme.of(context).canvasColor.withAlpha(128),
       child: FutureBuilder(
-          future: htmlData,
+          future: getHtmlData(languageCode),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               return Html(
