@@ -7,6 +7,8 @@ class L10n {
     Locale.fromSubtags(
         languageCode: 'zh', scriptCode: 'Hans'), // Simplified Chinese
     const Locale('ko'), // Koreanese
+    const Locale('es'), // Espanese
+    const Locale('fr'), // Franese
   ];
 
   static Map<String, String> getLanguageName(String languageCode) {
@@ -17,6 +19,10 @@ class L10n {
         return {'englishName': 'Chinese', 'localName': '汉语'};
       case 'ko':
         return {'englishName': 'Korean', 'localName': '한국어'};
+      case 'es':
+        return {'englishName': 'Spanish', 'localName': 'Español'};
+      case 'fr':
+        return {'englishName': 'French', 'localName': 'Français'};
       case 'en':
       default:
         return {'englishName': 'English', 'localName': 'English'};

@@ -46,7 +46,7 @@ flutter:
     - assets/res/wiki/
     - assets/res/adventour/
     - assets/res/adventour/banner/
-    - assets/icon/
+    # - assets/icon/
 
 dependency_overrides:
   font_awesome_flutter:

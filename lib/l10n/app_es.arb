@@ -1,0 +1,25 @@
+{
+  "language": "Spanish",
+  "@language": {
+    "description": "Idioma predeterminado"
+  },  
+  "languages": "Idiomas",
+  "translator": "Traductor",  
+  "favorites": "Favoritos",
+  "wiki": "Wiki",
+  "adventour": "Adventour",
+  "about": "Sobre",
+  "phrasebook": "Libro de frases",
+  "settings": "Ajustes",
+  "exit": "Salida",
+
+  "error": "Error",
+  "pageNotFound": "Página no encontrada",
+  
+  "noPhrasebook":"Sin frases",
+  "noPhrasebookMessage": "La lista de frases aparecerá aquí",
+  
+  "noFavorites":"Sin favoritos",
+  "noFavoritesMessage": "Tus traducciones favoritas aparecerán aquí"
+
+}

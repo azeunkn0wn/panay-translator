@@ -278,10 +278,6 @@ class _TranslatorState extends State<Translator> {
     return Text(AppLocalizations.of(context)!.error);
   }
 
-  // Future<void> _addToFavorites(Phrase phrase) async {
-  //   Favorites().addPhrase(phrase);
-  // }
-
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(

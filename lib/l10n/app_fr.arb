@@ -1,0 +1,25 @@
+{
+  "language": "French",
+  "@language": {
+    "description": "Langage par défaut"
+  },  
+  "languages": "Langues", 
+  "translator": "Traductrice",   
+  "favorites": "Favoris",
+  "wiki": "Wiki",
+  "adventour": "Adventour",
+  "about": "Sur",
+  "phrasebook": "Guide de conversation",
+  "settings": "Paramètres",
+  "exit": "Sortir",
+
+  "error": "Erreur",
+  "pageNotFound": "Page non trouvée",
+  
+  "noPhrasebook":"Pas d'expressions",
+  "noPhrasebookMessage": "La liste des phrases apparaîtra ici",
+  
+  "noFavorites":"Pas de favoris",
+  "noFavoritesMessage": "Vos traductions préférées apparaîtront ici"
+
+}

@@ -173,10 +173,14 @@ class CustomDrawerListTile extends StatelessWidget {
             children: [
               icon,
               Padding(padding: EdgeInsets.only(right: 20)),
-              Text(
-                title,
-                textAlign: TextAlign.center,
-                textScaleFactor: 1.5,
+              Expanded(
+                child: Text(
+                  title,
+                  textAlign: TextAlign.start,
+                  textScaleFactor: 1.5,
+                  overflow: TextOverflow.fade,
+                  softWrap: false,
+                ),
               ),
             ],
           ),
