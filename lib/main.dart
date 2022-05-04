@@ -8,9 +8,11 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
 
   // desktop stuff:
   if (Platform.isWindows || Platform.isIOS || Platform.isLinux) {
@@ -49,7 +51,7 @@ class MyApp extends StatelessWidget {
             locale: provider.locale,
             theme: ThemeData(
               primarySwatch: Colors.blue,
-              primaryColor: Color(0xFF38B6FF),
+              primaryColor: Color(0xFF5FB2F6),
               accentColor: Colors.white,
               canvasColor: Colors.grey[200],
               visualDensity: VisualDensity.adaptivePlatformDensity,
@@ -57,7 +59,7 @@ class MyApp extends StatelessWidget {
                 Theme.of(context).textTheme,
               ),
             ),
-            initialRoute: '/translator',
+            initialRoute: '/mainmenu',
             onGenerateRoute: RouteGenerator.generateRoute,
           );
         });

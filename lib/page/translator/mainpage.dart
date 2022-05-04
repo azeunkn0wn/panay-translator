@@ -46,34 +46,40 @@ class MainPageState extends State<MainPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text(_titleList(context)[_selectedPageIndex])),
-      drawer: MainDrawer(
-          parentKey: widget.key,
-          currentPage:
-              '/' + _titleList(context)[_selectedPageIndex].toLowerCase()),
-      bottomNavigationBar: BottomNavigationBar(
-        onTap: _onTapBar,
-        currentIndex: _selectedPageIndex,
-        items: [
-          BottomNavigationBarItem(
-              icon: Icon(Icons.portrait), label: _titleList(context)[0]),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.star_border_rounded),
-              label: _titleList(context)[1]),
-        ],
-      ),
-      body: PageView(
-        onPageChanged: (page) {
-          setState(() {
-            _selectedPageIndex = page;
-          });
-        },
-        controller: _pageController,
-        children: [
-          Translator(),
-          FavoritesPage(),
-        ],
+    return WillPopScope(
+      onWillPop: () async {
+        Navigator.pushNamedAndRemoveUntil(context, '/mainmenu', (_) => false);
+        return false;
+      },
+      child: Scaffold(
+        appBar: AppBar(title: Text(_titleList(context)[_selectedPageIndex])),
+        drawer: MainDrawer(
+            parentKey: widget.key,
+            currentPage:
+                '/' + _titleList(context)[_selectedPageIndex].toLowerCase()),
+        bottomNavigationBar: BottomNavigationBar(
+          onTap: _onTapBar,
+          currentIndex: _selectedPageIndex,
+          items: [
+            BottomNavigationBarItem(
+                icon: Icon(Icons.portrait), label: _titleList(context)[0]),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.star_border_rounded),
+                label: _titleList(context)[1]),
+          ],
+        ),
+        body: PageView(
+          onPageChanged: (page) {
+            setState(() {
+              _selectedPageIndex = page;
+            });
+          },
+          controller: _pageController,
+          children: [
+            Translator(),
+            FavoritesPage(),
+          ],
+        ),
       ),
     );
   }

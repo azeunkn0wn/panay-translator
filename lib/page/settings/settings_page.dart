@@ -22,15 +22,21 @@ class SettingsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-            elevation: 0,
-            title: Text(
-              AppLocalizations.of(context)!.settings,
-            )),
-        body: ListView(
-          children: [languageSettings(context)],
+    return WillPopScope(
+      onWillPop: () async {
+        Navigator.pushNamedAndRemoveUntil(context, '/mainmenu', (_) => false);
+        return false;
+      },
+      child: SafeArea(
+        child: Scaffold(
+          appBar: AppBar(
+              elevation: 0,
+              title: Text(
+                AppLocalizations.of(context)!.settings,
+              )),
+          body: ListView(
+            children: [languageSettings(context)],
+          ),
         ),
       ),
     );

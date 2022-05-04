@@ -234,17 +234,23 @@ class Background extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        image: DecorationImage(
-          image: AssetImage(image),
-          fit: BoxFit.cover,
+    return WillPopScope(
+      onWillPop: () async {
+        Navigator.pushNamedAndRemoveUntil(context, '/mainmenu', (_) => false);
+        return false;
+      },
+      child: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage(image),
+            fit: BoxFit.cover,
+          ),
         ),
-      ),
-      child: new BackdropFilter(
-        filter: new ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
-        child: new Container(
-          decoration: new BoxDecoration(color: Colors.white.withOpacity(0.0)),
+        child: new BackdropFilter(
+          filter: new ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
+          child: new Container(
+            decoration: new BoxDecoration(color: Colors.white.withOpacity(0.0)),
+          ),
         ),
       ),
     );

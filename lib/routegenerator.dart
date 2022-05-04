@@ -1,6 +1,8 @@
 import 'package:panay_translator/model/region.dart';
 import 'package:panay_translator/page/about/aboutpage.dart';
 import 'package:panay_translator/page/adventour/adventour_page_view.dart';
+import 'package:panay_translator/page/login/loginpage.dart';
+import 'package:panay_translator/page/mainmenu/mainmenu.dart';
 
 import 'package:panay_translator/page/phrasebook/phrasebook_page.dart';
 import 'package:panay_translator/page/settings/language_picker.dart';
@@ -18,7 +20,12 @@ class RouteGenerator {
 
     switch (settings.name) {
       case '/':
-        return MaterialPageRoute(builder: (_) => MainPage());
+        return MaterialPageRoute(builder: (_) => MainMenu());
+
+      case '/login':
+        return MaterialPageRoute(builder: (_) => LoginPage());
+      case '/mainmenu':
+        return MaterialPageRoute(builder: (_) => MainMenu());
       case ('/translator'):
         return MaterialPageRoute(
             builder: (_) => MainPage(
@@ -53,7 +60,7 @@ class RouteGenerator {
 
   static Route<dynamic> _errorRoute() {
     Future<bool> _onPop(BuildContext context) async {
-      Navigator.of(context).pushNamed('/translator');
+      Navigator.pushNamedAndRemoveUntil(context, '/mainmenu', (_) => false);
       return false;
     }
 

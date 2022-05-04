@@ -38,46 +38,52 @@ class _WikiState extends State<Wiki> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Scaffold(
-        appBar: AppBar(
-            title: Text(AppLocalizations.of(context)!.wiki),
-            textTheme: Theme.of(context).textTheme),
-        drawer: MainDrawer(
-          currentPage: '/wiki',
-        ),
-        body: FutureBuilder(
-            future: getRegion,
-            builder: (context, AsyncSnapshot<List?> snapshot) {
-              if (snapshot.hasData) {
-                wikiButtonsList = [];
-                snapshot.data!.forEach((element) {
-                  wikiButtonsList.add(WikiButtons(element));
-                });
+    return WillPopScope(
+      onWillPop: () async {
+        Navigator.pushNamedAndRemoveUntil(context, '/mainmenu', (_) => false);
+        return false;
+      },
+      child: Container(
+        child: Scaffold(
+          appBar: AppBar(
+              title: Text(AppLocalizations.of(context)!.wiki),
+              textTheme: Theme.of(context).textTheme),
+          drawer: MainDrawer(
+            currentPage: '/wiki',
+          ),
+          body: FutureBuilder(
+              future: getRegion,
+              builder: (context, AsyncSnapshot<List?> snapshot) {
+                if (snapshot.hasData) {
+                  wikiButtonsList = [];
+                  snapshot.data!.forEach((element) {
+                    wikiButtonsList.add(WikiButtons(element));
+                  });
 
-                return SingleChildScrollView(
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(vertical: 15),
-                    child: Center(
-                      child: Wrap(
-                        direction: Axis.vertical,
-                        runSpacing: 20,
-                        spacing: 20,
-                        children: wikiButtonsList,
+                  return SingleChildScrollView(
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(vertical: 15),
+                      child: Center(
+                        child: Wrap(
+                          direction: Axis.vertical,
+                          runSpacing: 20,
+                          spacing: 20,
+                          children: wikiButtonsList,
+                        ),
                       ),
                     ),
-                  ),
-                );
-              } else {
-                return Center(
-                  child: SizedBox(
-                    child: CircularProgressIndicator(),
-                    width: 60,
-                    height: 60,
-                  ),
-                );
-              }
-            }),
+                  );
+                } else {
+                  return Center(
+                    child: SizedBox(
+                      child: CircularProgressIndicator(),
+                      width: 60,
+                      height: 60,
+                    ),
+                  );
+                }
+              }),
+        ),
       ),
     );
   }

@@ -4,47 +4,44 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:panay_translator/utilities/photohero.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class MainDrawer extends StatelessWidget {
-  const MainDrawer({Key? key, required this.currentPage, this.parentKey})
-      : super(key: key);
-  final String currentPage;
-  final GlobalKey<dynamic>? parentKey;
+class MainMenu extends StatelessWidget {
+  const MainMenu();
 
   static const double iconSize = 35;
 
   void _onTapNavigate(BuildContext context, String newPage) {
-    if (currentPage == newPage) {
-      Navigator.pop(context);
-    } else {
-      Navigator.pushNamed(context, newPage);
-    }
+    Navigator.pushNamed(context, newPage);
   }
 
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      child: Container(
-        color: Theme.of(context).primaryColor,
-        child: SafeArea(
-          child: SingleChildScrollView(
-            child: Container(
-              color: Theme.of(context).accentColor,
-              child: Column(
-                children: [
-                  Container(
-                    color: Theme.of(context).primaryColor,
-                    // height: MediaQuery.of(context).size.width - 100,
-                    width: MediaQuery.of(context).size.width,
-                    child: Container(
-                      margin: EdgeInsets.all(10),
-                      child: PhotoHero(
-                        photo:
-                            'assets/images/Panay Island Translator (round).png',
-                        width: MediaQuery.of(context).size.width,
-                      ),
+      child: SafeArea(
+        child: CustomScrollView(
+          slivers: [
+            SliverAppBar(
+              backgroundColor: Color(0xFFEDF2F8),
+              expandedHeight: MediaQuery.of(context).size.width,
+              flexibleSpace: FlexibleSpaceBar(
+                background: Container(
+                  color: Theme.of(context).primaryColor,
+                  // height: MediaQuery.of(context).size.width - 100,
+                  width: MediaQuery.of(context).size.width,
+                  child: Container(
+                    margin: EdgeInsets.all(10),
+                    child: PhotoHero(
+                      photo:
+                          'assets/images/Panay Island Translator (round).png',
+                      width: MediaQuery.of(context).size.width,
                     ),
                   ),
-                  CustomDrawerListTile(
+                ),
+              ),
+            ),
+            SliverList(
+              delegate: SliverChildListDelegate(
+                [
+                  MainMenuIcon(
                       icon: FaIcon(
                         FontAwesomeIcons.lightLanguage,
                         size: iconSize,
@@ -52,21 +49,9 @@ class MainDrawer extends StatelessWidget {
                       title: AppLocalizations.of(context)!
                           .translator, //'Translator',
                       onTap: () {
-                        switch (currentPage) {
-                          case ('/translator'):
-                            Navigator.pop(context);
-                            return;
-                          case ('/favorites'):
-                            Navigator.pop(context);
-                            parentKey!.currentState!.changePage(0);
-                            return;
-
-                          default:
-                            Navigator.pushNamed(context, "/translator");
-                            return;
-                        }
+                        _onTapNavigate(context, '/translator');
                       }),
-                  CustomDrawerListTile(
+                  MainMenuIcon(
                       icon: FaIcon(
                         FontAwesomeIcons.wikipediaW,
                         size: iconSize,
@@ -75,28 +60,16 @@ class MainDrawer extends StatelessWidget {
                       onTap: () {
                         _onTapNavigate(context, '/wiki');
                       }),
-                  CustomDrawerListTile(
+                  MainMenuIcon(
                       icon: FaIcon(
                         FontAwesomeIcons.lightStar,
                         size: iconSize,
                       ),
                       title: AppLocalizations.of(context)!.favorites,
                       onTap: () {
-                        switch (currentPage) {
-                          case ('/favorites'):
-                            Navigator.pop(context);
-                            return;
-                          case ('/translator'):
-                            Navigator.pop(context);
-                            parentKey!.currentState!.changePage(1);
-                            return;
-
-                          default:
-                            Navigator.pushNamed(context, "/favorites");
-                            return;
-                        }
+                        _onTapNavigate(context, '/favorites');
                       }),
-                  CustomDrawerListTile(
+                  MainMenuIcon(
                     icon: FaIcon(
                       FontAwesomeIcons.lightBookOpen,
                       size: iconSize,
@@ -106,7 +79,7 @@ class MainDrawer extends StatelessWidget {
                       _onTapNavigate(context, '/phrasebook');
                     },
                   ),
-                  CustomDrawerListTile(
+                  MainMenuIcon(
                       // icon: Image.asset("assets/icon/adventour.png"),
                       icon: FaIcon(
                         FontAwesomeIcons.lightMapMarkedAlt,
@@ -116,7 +89,7 @@ class MainDrawer extends StatelessWidget {
                       onTap: () {
                         _onTapNavigate(context, '/adventour');
                       }),
-                  CustomDrawerListTile(
+                  MainMenuIcon(
                     icon: FaIcon(
                       FontAwesomeIcons.lightInfoCircle,
                       size: iconSize,
@@ -126,7 +99,7 @@ class MainDrawer extends StatelessWidget {
                       _onTapNavigate(context, '/about');
                     },
                   ),
-                  CustomDrawerListTile(
+                  MainMenuIcon(
                     icon: FaIcon(
                       FontAwesomeIcons.lightCog,
                       size: iconSize,
@@ -136,7 +109,7 @@ class MainDrawer extends StatelessWidget {
                       _onTapNavigate(context, '/settings');
                     },
                   ),
-                  CustomDrawerListTile(
+                  MainMenuIcon(
                     icon: FaIcon(
                       FontAwesomeIcons.lightSignOut,
                       size: iconSize,
@@ -147,18 +120,18 @@ class MainDrawer extends StatelessWidget {
                 ],
               ),
             ),
-          ),
+          ],
         ),
       ),
     );
   }
 }
 
-class CustomDrawerListTile extends StatelessWidget {
+class MainMenuIcon extends StatelessWidget {
   final Widget icon;
   final String title;
   final Function? onTap;
-  CustomDrawerListTile({required this.icon, required this.title, this.onTap});
+  MainMenuIcon({required this.icon, required this.title, this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -174,7 +147,7 @@ class CustomDrawerListTile extends StatelessWidget {
         splashColor: Theme.of(context).primaryColor,
         onTap: onTap as void Function()?,
         child: Container(
-          margin: EdgeInsets.fromLTRB(20, 0, 8, 0),
+          margin: EdgeInsets.fromLTRB(50, 0, 8, 0),
           height: 50,
           child: Row(
             children: [
