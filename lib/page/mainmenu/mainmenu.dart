@@ -18,15 +18,20 @@ class MainMenu extends StatelessWidget {
     return Drawer(
       child: SafeArea(
         child: CustomScrollView(
+          physics:
+              BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
           slivers: [
             SliverAppBar(
+              centerTitle: true,
+              stretch: true,
+              pinned: true,
               backgroundColor: Color(0xFFEDF2F8),
               expandedHeight: MediaQuery.of(context).size.width,
               flexibleSpace: FlexibleSpaceBar(
                 background: Container(
                   color: Theme.of(context).primaryColor,
                   // height: MediaQuery.of(context).size.width - 100,
-                  width: MediaQuery.of(context).size.width,
+                  // width: MediaQuery.of(context).size.width,
                   child: Container(
                     margin: EdgeInsets.all(10),
                     child: PhotoHero(
