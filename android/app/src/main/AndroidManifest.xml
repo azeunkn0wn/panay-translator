@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.aze.PanayTranslator">
    <application
-        android:label="Panay Translator"
+        android:label="PITA"
         android:icon="@mipmap/launcher_icon">
         <activity
             android:name=".MainActivity"
