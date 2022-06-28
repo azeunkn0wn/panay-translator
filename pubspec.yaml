@@ -46,6 +46,7 @@ flutter:
   assets:
     - assets/images/
     - assets/images/logo/
+    - assets/images/pic/
     - assets/res/wiki/
     - assets/res/adventour/
     - assets/res/adventour/banner/
