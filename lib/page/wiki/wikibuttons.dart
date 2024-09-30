@@ -45,7 +45,7 @@ class WikiButtons extends StatelessWidget {
                   region.regionName!,
                   textAlign: TextAlign.justify,
                   style: TextStyle(
-                    color: Theme.of(context).accentColor,
+                    color: Theme.of(context).colorScheme.secondary,
                     fontSize: MediaQuery.of(context).size.width / 8,
                   ),
                 ),

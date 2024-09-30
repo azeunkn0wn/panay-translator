@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:panay_translator/utilities/photohero.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MainMenu extends StatelessWidget {
   const MainMenu();
@@ -162,7 +162,7 @@ class MainMenuIcon extends StatelessWidget {
                 child: Text(
                   title,
                   textAlign: TextAlign.start,
-                  textScaleFactor: 1.5,
+                  textScaler: TextScaler.linear(1.5),
                   // overflow: TextOverflow.fade,
                   softWrap: false,
                 ),

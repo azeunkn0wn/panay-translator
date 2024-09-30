@@ -14,31 +14,31 @@ dependencies:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
-  intl: ^0.17.0
-  flutter_html: ^2.1.1
-  flutter_tts: ^3.2.2
-  google_fonts: ^2.1.0
+  intl: ^0.19.0
+  flutter_html: ^3.0.0-beta.2
+  flutter_tts: ^4.0.2
+  google_fonts: ^6.2.1
   path_provider: ^2.0.2
   shared_preferences: ^2.0.7
   sqflite: ^2.0.0+3
   json_annotation: ^4.0.0
-  flutter_slidable: ^0.6.0
-  font_awesome_flutter: ">= 4.7.0"
+  flutter_slidable: ^3.1.1
+  font_awesome_flutter: ^4.7.0
   equatable: ^2.0.3
-  bitsdojo_window: ^0.1.1+1
+
   provider: ^6.0.0
-  flutter_math_fork: ^0.5.0
+  flutter_math_fork: ^0.7.2
   # firebase_auth: ^3.3.16
   # google_sign_in: ^5.3.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_launcher_icons: ^0.9.1
-  flutter_native_splash: ^1.2.3
+  flutter_launcher_icons: ^0.14.1
+  flutter_native_splash: ^2.4.1
   change_app_package_name: ^1.0.0
   build_runner: ^2.0.0
-  json_serializable: ^4.1.4
+  json_serializable: ^6.8.0
 
 flutter:
   generate: true

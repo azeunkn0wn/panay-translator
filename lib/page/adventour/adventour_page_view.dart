@@ -1,9 +1,11 @@
+import 'dart:ui';
+
+import 'package:flutter/material.dart';
+// import 'package:flutter_html/shims/dart_ui_real.dart';
 import 'package:panay_translator/drawer.dart';
 import 'package:panay_translator/model/region.dart';
 import 'package:panay_translator/page/adventour/adventour_page_item.dart';
 import 'package:panay_translator/page/adventour/page_transformer.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_html/shims/dart_ui_real.dart';
 import 'package:panay_translator/utilities/database.dart';
 import 'package:panay_translator/utilities/loadhtml.dart';
 

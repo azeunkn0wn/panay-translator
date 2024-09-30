@@ -1,12 +1,12 @@
 import 'dart:async';
 
-import 'package:panay_translator/model/language.dart';
 import 'package:flutter/material.dart';
-import 'package:panay_translator/model/phrase.dart';
-import 'package:panay_translator/utilities/sharedPreferences/favorites.dart';
-import 'package:panay_translator/utilities/database.dart';
-import 'package:panay_translator/utilities/tts.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:panay_translator/model/language.dart';
+import 'package:panay_translator/model/phrase.dart';
+import 'package:panay_translator/utilities/database.dart';
+import 'package:panay_translator/utilities/sharedPreferences/favorites.dart';
+import 'package:panay_translator/utilities/tts.dart';
 
 class Translator extends StatefulWidget {
   Translator({Key? key, String title = 'Translator'}) : super(key: key);
@@ -157,7 +157,7 @@ class _TranslatorState extends State<Translator> {
         },
         icon: Icon(
           icon,
-          color: Theme.of(context).accentColor,
+          color: Theme.of(context).colorScheme.secondary,
           size: 34,
         )); //
   }
@@ -228,7 +228,7 @@ class _TranslatorState extends State<Translator> {
             }).toList();
           },
           elevation: 9,
-          style: Theme.of(context).textTheme.bodyText1!.copyWith(
+          style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                 color: Theme.of(context).primaryColor,
                 fontSize: languageBarSize,
               ),
@@ -313,12 +313,12 @@ class _TranslatorState extends State<Translator> {
                       ),
                       ElevatedButton(
                         style: ButtonStyle(
-                            shape: MaterialStateProperty.all(CircleBorder()),
+                            shape: WidgetStateProperty.all(CircleBorder()),
                             //  color: Theme.of(context)
                             //     .canvasColor, //transparent background color
-                            backgroundColor: MaterialStateProperty.all<Color>(
+                            backgroundColor: WidgetStateProperty.all<Color>(
                                 Theme.of(context).canvasColor),
-                            elevation: MaterialStateProperty.all<double>(0)),
+                            elevation: WidgetStateProperty.all<double>(0)),
                         onPressed: () {
                           setState(() {
                             swapped = !swapped;
@@ -364,7 +364,7 @@ class _TranslatorState extends State<Translator> {
         borderRadius: BorderRadius.all(Radius.circular(8.0)),
         color: !active
             ? Theme.of(context).primaryColor
-            : Theme.of(context).accentColor,
+            : Theme.of(context).colorScheme.secondary,
       ),
       alignment: Alignment.center,
       padding: EdgeInsets.all(10),
@@ -375,7 +375,7 @@ class _TranslatorState extends State<Translator> {
             style: TextStyle(
               fontSize: languageCardSize,
               color: !active
-                  ? Theme.of(context).accentColor
+                  ? Theme.of(context).colorScheme.secondary
                   : Theme.of(context).primaryColor,
             ),
             controller: englishText,
@@ -390,7 +390,9 @@ class _TranslatorState extends State<Translator> {
               hintText: 'English',
               hintStyle: TextStyle(
                 fontSize: 16,
-                color: !active ? Theme.of(context).accentColor : Colors.grey,
+                color: !active
+                    ? Theme.of(context).colorScheme.secondary
+                    : Colors.grey,
               ),
             ),
           ),
@@ -400,7 +402,7 @@ class _TranslatorState extends State<Translator> {
               visible: englishText.text == '' ? false : true,
               child: IconButton(
                 color: !active
-                    ? Theme.of(context).accentColor
+                    ? Theme.of(context).colorScheme.secondary
                     : Theme.of(context).primaryColor,
                 icon: Icon(Icons.volume_up, size: 35),
                 onPressed: () => PhraseTTS().speak(englishText.text, true),
@@ -419,7 +421,7 @@ class _TranslatorState extends State<Translator> {
         borderRadius: BorderRadius.all(Radius.circular(8.0)),
         color: !active
             ? Theme.of(context).primaryColor
-            : Theme.of(context).accentColor,
+            : Theme.of(context).colorScheme.secondary,
       ),
       alignment: Alignment.center,
       padding: EdgeInsets.all(10),
@@ -430,7 +432,7 @@ class _TranslatorState extends State<Translator> {
             style: TextStyle(
               fontSize: languageCardSize,
               color: !active
-                  ? Theme.of(context).accentColor
+                  ? Theme.of(context).colorScheme.secondary
                   : Theme.of(context).primaryColor,
             ),
             enabled: active,
@@ -443,7 +445,9 @@ class _TranslatorState extends State<Translator> {
               hintText: language.language,
               hintStyle: TextStyle(
                 fontSize: 16,
-                color: !active ? Theme.of(context).accentColor : Colors.grey,
+                color: !active
+                    ? Theme.of(context).colorScheme.secondary
+                    : Colors.grey,
               ),
             ),
           ),
@@ -455,7 +459,7 @@ class _TranslatorState extends State<Translator> {
                 Visibility(visible: !active, child: favoritesButton()),
                 IconButton(
                   color: !active
-                      ? Theme.of(context).accentColor
+                      ? Theme.of(context).colorScheme.secondary
                       : Theme.of(context).primaryColor,
                   icon: Icon(Icons.volume_up, size: 35),
                   onPressed: () => PhraseTTS().speak(localText.text, false),

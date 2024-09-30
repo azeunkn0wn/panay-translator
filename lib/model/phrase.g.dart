@@ -7,7 +7,7 @@ part of 'phrase.dart';
 // **************************************************************************
 
 Phrase _$PhraseFromJson(Map<String, dynamic> json) => Phrase(
-      json['phraseID'] as int,
+      (json['phraseID'] as num).toInt(),
       json['phrase'] as String,
       Language.fromJson(json['language'] as Map<String, dynamic>),
     );

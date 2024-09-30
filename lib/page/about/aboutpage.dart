@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:panay_translator/page/about/aboutcard.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:panay_translator/page/about/aboutcard.dart';
 
 class AboutPage extends StatelessWidget {
+  AboutPage({Key? key}) : super(key: key);
   static const List<Map> profile = [
     {
       "name": "Glenn D. Dionio",
@@ -27,17 +28,14 @@ class AboutPage extends StatelessWidget {
     },
   ];
 
-  List<AboutCard> cards = [];
-
-  void getCards(profile) {
-    for (Map data in profile) {
-      cards.add(AboutCard(data: data));
-    }
-  }
+  void getCards(profile) {}
 
   @override
   Widget build(BuildContext context) {
-    getCards(profile);
+    List<AboutCard> cards = [];
+    for (Map data in profile) {
+      cards.add(AboutCard(data: data));
+    }
     return WillPopScope(
       onWillPop: () async {
         Navigator.pushNamedAndRemoveUntil(context, '/mainmenu', (_) => false);

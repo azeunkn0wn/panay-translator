@@ -1,7 +1,7 @@
-import 'package:panay_translator/model/region.dart';
-import 'package:panay_translator/utilities/loadhtml.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:panay_translator/model/region.dart';
+import 'package:panay_translator/utilities/loadhtml.dart';
 import 'package:panay_translator/utilities/photohero.dart';
 
 class WikiPage extends StatelessWidget {

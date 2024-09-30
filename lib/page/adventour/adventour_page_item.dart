@@ -1,6 +1,6 @@
+import 'package:flutter/material.dart';
 import 'package:panay_translator/page/adventour/adventour_page_view.dart';
 import 'package:panay_translator/page/adventour/page_transformer.dart';
-import 'package:flutter/material.dart';
 
 class AdventourPageItem extends StatelessWidget {
   AdventourPageItem({
@@ -39,7 +39,7 @@ class AdventourPageItem extends StatelessWidget {
       translationFactor: 300.0,
       child: Text(
         item.subtitle,
-        style: textTheme.caption!.copyWith(
+        style: textTheme.bodySmall!.copyWith(
           color: Colors.white70,
           fontWeight: FontWeight.bold,
           letterSpacing: 2.0,
@@ -55,7 +55,7 @@ class AdventourPageItem extends StatelessWidget {
         padding: const EdgeInsets.only(top: 16.0),
         child: Text(
           item.title,
-          style: textTheme.headline6!
+          style: textTheme.titleLarge!
               .copyWith(color: Colors.white, fontWeight: FontWeight.bold),
           textAlign: TextAlign.center,
         ),

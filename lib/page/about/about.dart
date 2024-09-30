@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:panay_translator/utilities/photohero.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:panay_translator/utilities/photohero.dart';
 
 class About extends StatelessWidget {
   @override
@@ -35,7 +35,7 @@ class About extends StatelessWidget {
                 Container(
                   margin: EdgeInsets.all(20),
                   child: RichText(
-                    textScaleFactor: 1.3,
+                    textScaler: TextScaler.linear(1.3),
                     textAlign: TextAlign.center,
                     text: TextSpan(
                       // Note: Styles for TextSpans must be explicitly defined.

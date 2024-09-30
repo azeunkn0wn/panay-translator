@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:panay_translator/model/phrase.dart';
 import 'package:panay_translator/utilities/sharedPreferences/favorites.dart';
-
-import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:panay_translator/utilities/tts.dart';
-
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class FavoritesPage extends StatefulWidget {
   FavoritesPage({Key? key, String title = 'Favorites'}) : super(key: key);
@@ -42,20 +40,22 @@ class FavoritesPageState extends State<FavoritesPage> {
                 itemCount: snapshot.data!.length,
                 itemBuilder: (_, index) {
                   return Slidable(
-                    secondaryActions: [
-                      Card(
-                        child: IconSlideAction(
-                          caption: 'remove',
-                          color: Colors.red[300],
-                          icon: Icons.delete_outline_rounded,
-                          onTap: () {
-                            removeFromFavorites(snapshot.data![index]);
-                          },
+                    endActionPane: ActionPane(
+                      motion: ScrollMotion(),
+                      extentRatio: 0.25,
+                      children: [
+                        Card(
+                          child: SlidableAction(
+                            label: 'remove',
+                            backgroundColor: Colors.red[300]!,
+                            icon: Icons.delete_outline_rounded,
+                            onPressed: (context) {
+                              removeFromFavorites(snapshot.data![index]);
+                            },
+                          ),
                         ),
-                      ),
-                    ],
-                    actionPane: SlidableScrollActionPane(),
-                    actionExtentRatio: 0.25,
+                      ],
+                    ),
                     child: Card(
                       child: ListTile(
                         onLongPress: () {

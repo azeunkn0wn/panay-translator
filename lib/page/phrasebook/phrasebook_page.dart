@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:panay_translator/drawer.dart';
 import 'package:panay_translator/model/phrase.dart';
 import 'package:panay_translator/utilities/database.dart';
 import 'package:panay_translator/utilities/tts.dart';
-
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class PhrasebookPage extends StatefulWidget {
   PhrasebookPage({Key? key, String title = 'Favorites'}) : super(key: key);

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:panay_translator/drawer.dart';
 import 'package:panay_translator/page/translator/favorites.dart';
 import 'package:panay_translator/page/translator/translator.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MainPage extends StatefulWidget {
   MainPage({Key? key, this.selectedPageIndex = 0}) : super(key: key);
